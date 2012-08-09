@@ -43,6 +43,19 @@ Rectangle {
         opacity: 0.5
     }
 
+    Image
+    {
+        id: quit
+        source: "/Users/Lars/Documents/Jarvis/GUI/images/quit.png"
+
+        x:500; y:500
+        MouseArea
+        {
+            anchors.fill: parent
+            onClicked: generalRec.state = ""
+        }
+    }
+
 
     Rectangle {
         color: "transparent"
@@ -145,9 +158,6 @@ Rectangle {
 
 
 
-
-
-
     states: [
         State {
             name: "login";
@@ -155,15 +165,14 @@ Rectangle {
             PropertyChanges { target: loginwindow; opacity:0}
             AnchorChanges { target: sendbutton; anchors.right: parent.right; anchors.bottom: parent.bottom;}
             AnchorChanges { target: input; anchors.bottom: parent.bottom; anchors.left: parent.left; anchors.right: sendbutton.left;}
-
-
-
+            AnchorChanges { target: quit; anchors.top: parent.top; anchors.right: parent.right}
         }
     ]
 
 
     transitions: [
         Transition {
+            from: ""; to: "login"; reversible: true
             NumberAnimation { properties: "x,y,opacity"; duration: 600; easing.type: Easing.InOutQuad }
             AnchorAnimation { duration: 600; easing.type: Easing.InOutQuad}
         }
