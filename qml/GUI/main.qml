@@ -11,7 +11,7 @@ Rectangle {
             id: background
             anchors.fill: parent; color: "#343434";
 
-            Image { source: "/Users/Lars/Documents/Jarvis/GUI/images/stripes.png"; fillMode: Image.Tile; anchors.fill: parent; opacity: 0.3 }
+            Image { source: "../../images/stripes.png"; fillMode: Image.Tile; anchors.fill: parent; opacity: 0.3 }
            }
 
 
@@ -46,7 +46,7 @@ Rectangle {
     Image
     {
         id: quit
-        source: "/Users/Lars/Documents/Jarvis/GUI/images/quit.png"
+        source: "../../images/quit.png"
 
         x:500; y:500
         MouseArea
