@@ -35,3 +35,14 @@ SOURCES += main.cpp
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
 qtcAddDeployment()
+
+OTHER_FILES += \
+    images/toolbutton.sci \
+    images/toolbutton.png \
+    images/titlebar.sci \
+    images/titlebar.png \
+    images/stripes.png \
+    images/quit.png \
+    images/loading.png \
+    images/lineedit.sci \
+    images/lineedit.png

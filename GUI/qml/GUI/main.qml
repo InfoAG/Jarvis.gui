@@ -7,105 +7,34 @@ Rectangle {
     height: 400
     radius: 0
 
-    TextInput {
-        id: input
-        y: 336
-        height: button.height
-        text: qsTr("text")
-        anchors.right: button.left
-        anchors.rightMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        font.pixelSize: 12
-        Rectangle
-        {
-            color: "#00000000"
-            border.color: "#000000"
-            anchors.fill: parent
+   Rectangle {
+       id: background
+       anchors.fill: parent; color: "#343434";
 
-        }
-    }
+       state:"searchquery"
+       Image { source: "../../images/stripes.png"; fillMode: Image.Tile; anchors.fill: parent; opacity: 0.3 }
+   }
+
+
+
+
+
+
+
+
+
+   Input{
+       id: input
+       //onAccepted:searchbutton.doSearch();
+       focus: true
+       anchors.bottom: parent.bottom; anchors.bottomMargin: 5; anchors.left: parent.left; anchors.leftMargin: 5; anchors.right: sendbutton.left; anchors.rightMargin: 5
+   }
 
     Button {
+        id: sendbutton
         text: "Send"
-        id: button
-        x: 667
-        y: 366
-        width: 90
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        Rectangle
-        {
-            color: "#00000000"
-            border.color: "#000000"
-            anchors.fill: parent
-
-        }
+        anchors.right: parent.right; anchors.rightMargin: 5; y: 3; width: 100; height: 32; anchors.bottom: parent.bottom; anchors.bottomMargin: 5
     }
 
-    Text {
-        id: output
-        width: generalRec.width-2*button.width
-        text: qsTr("text")
-        anchors.left: scopes.right
-        anchors.leftMargin: 0
-        anchors.bottom: input.top
-        anchors.bottomMargin: 0
-        anchors.top: parent.top
-        anchors.topMargin: 0
-        font.pixelSize: 12
-        Rectangle
-        {
-            color: "#00000000"
-            border.color: "#000000"
-            anchors.fill: parent
 
-        }
-    }
-
-    Text {
-        id: scopes
-        width: button.width
-        text: qsTr("text")
-        anchors.bottom: input.top
-        anchors.bottomMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.top: parent.top
-        anchors.topMargin: 0
-        font.pixelSize: 12
-        Rectangle
-        {
-            color: "#00000000"
-            border.color: "#000000"
-            anchors.fill: parent
-
-        }
-    }
-
-    Text {
-        id: names
-        x: 628
-        y: 0
-        width: button.width
-        text: qsTr("text")
-        anchors.left: output.right
-        anchors.leftMargin: 0
-        anchors.bottom: button.top
-        anchors.bottomMargin: 0
-        anchors.top: parent.top
-        anchors.topMargin: 0
-        font.pixelSize: 12
-        Rectangle
-        {
-            color: "#00000000"
-            border.color: "#000000"
-            anchors.fill: parent
-
-        }
-    }
 }
