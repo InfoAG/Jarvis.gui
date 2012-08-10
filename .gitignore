@@ -10,3 +10,11 @@
 *.lai
 *.la
 *.a
+
+# other
+*.pro.user*
+Makefile*
+*.desktop
+*.svg
+debug/
+release/
