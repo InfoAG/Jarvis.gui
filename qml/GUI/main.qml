@@ -11,7 +11,7 @@ Rectangle {
             id: background
             anchors.fill: parent; color: "#343434";
 
-            Image { source: "../../images/stripes.png"; fillMode: Image.Tile; anchors.fill: parent; opacity: 0.3 }
+            Image { source: "/Users/Lars/Documents/Jarvis/GUI/images/stripes.png"; fillMode: Image.Tile; anchors.fill: parent; opacity: 0.3 }
            }
 
 
@@ -19,8 +19,9 @@ Rectangle {
             id: input
            //onAccepted:searchbutton.doSearch();
            focus: true
-           x:500
-           y:500
+           x:generalRec.width+500
+           y:generalRec.height+500
+           visible: false
            anchors.bottomMargin: 5; anchors.leftMargin: 5; anchors.rightMargin: 5
            onAccepted: sendbutton.state = "Entered"
         }
@@ -28,8 +29,9 @@ Rectangle {
     Button {
         id: sendbutton
         text: "Send"
-        x:500
-        y:500
+        visible: false
+        x:generalRec.width+500
+        y:generalRec.height+500
         //anchors.right: parent.right; anchors.rightMargin: 5; y: 3; width: 100; height: 32; anchors.bottom: parent.bottom; anchors.bottomMargin: 5
         anchors.rightMargin: 5; width: 100; height: 32; anchors.bottomMargin: 5
 
@@ -46,9 +48,10 @@ Rectangle {
     Image
     {
         id: quit
-        source: "../../images/quit.png"
+        source: "/Users/Lars/Documents/Jarvis/GUI/images/quit.png"
+        visible: false
 
-        x:500; y:500
+        x:generalRec.width+500; y:generalRec.height+500
         MouseArea
         {
             anchors.fill: parent
@@ -166,7 +169,9 @@ Rectangle {
             AnchorChanges { target: sendbutton; anchors.right: parent.right; anchors.bottom: parent.bottom;}
             AnchorChanges { target: input; anchors.bottom: parent.bottom; anchors.left: parent.left; anchors.right: sendbutton.left;}
             AnchorChanges { target: quit; anchors.top: parent.top; anchors.right: parent.right}
-            PropertyChanges { target: input; focus: true}
+            PropertyChanges { target: input; focus: true; visible: true}
+            PropertyChanges{ target: sendbutton; visible: true}
+            PropertyChanges { target: quit; visible: true}
         }
     ]
 
@@ -174,8 +179,12 @@ Rectangle {
     transitions: [
         Transition {
             from: ""; to: "login"; reversible: true
-            NumberAnimation { properties: "x,y,opacity"; duration: 600; easing.type: Easing.InOutQuad }
-            AnchorAnimation { duration: 600; easing.type: Easing.InOutQuad}
+            NumberAnimation { properties: "visible"; duration: 100}
+            ParallelAnimation
+            {
+                NumberAnimation { properties: "x,y,opacity"; duration: 600; easing.type: Easing.InOutQuad }
+                AnchorAnimation { duration: 600; easing.type: Easing.InOutQuad}
+            }
         }
     ]
 
