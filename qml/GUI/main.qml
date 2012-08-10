@@ -166,6 +166,7 @@ Rectangle {
             AnchorChanges { target: sendbutton; anchors.right: parent.right; anchors.bottom: parent.bottom;}
             AnchorChanges { target: input; anchors.bottom: parent.bottom; anchors.left: parent.left; anchors.right: sendbutton.left;}
             AnchorChanges { target: quit; anchors.top: parent.top; anchors.right: parent.right}
+            PropertyChanges { target: input; focus: true}
         }
     ]
 
