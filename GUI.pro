@@ -8,6 +8,10 @@ QML_IMPORT_PATH =
 
 symbian:TARGET.UID3 = 0xED9CD242
 
+QMAKE_CXXFLAGS += -std=c++11
+
+QT += network
+
 # Smart Installer package's UID
 # This UID is from the protected range and therefore the package will
 # fail to install if self-signed. By default qmake uses the unprotected
@@ -30,7 +34,11 @@ symbian:TARGET.CAPABILITY += NetworkServices
 # CONFIG += qt-components
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    Scope.cpp \
+    ModulePackage.cpp \
+    Module.cpp \
+    JarvisClient.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -46,3 +54,9 @@ OTHER_FILES += \
     images/loading.png \
     images/lineedit.sci \
     images/lineedit.png
+
+HEADERS += \
+    Scope.h \
+    ModulePackage.h \
+    Module.h \
+    JarvisClient.h
