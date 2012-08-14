@@ -35,10 +35,7 @@ symbian:TARGET.CAPABILITY += NetworkServices
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
-    Scope.cpp \
-    ModulePackage.cpp \
-    Module.cpp \
-    JarvisClient.cpp
+
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -54,9 +51,3 @@ OTHER_FILES += \
     images/loading.png \
     images/lineedit.sci \
     images/lineedit.png
-
-HEADERS += \
-    Scope.h \
-    ModulePackage.h \
-    Module.h \
-    JarvisClient.h
