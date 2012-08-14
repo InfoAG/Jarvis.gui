@@ -31,7 +31,8 @@ Rectangle {
            y:generalRec.height+500
            visible: false
            anchors.bottomMargin: 5; anchors.leftMargin: 5; anchors.rightMargin: 5
-           onAccepted: sendbutton.state = "Entered"
+           onAccepted: {sendbutton.state = "Pressed"; sendbutton.state=""}
+
         }
 
     Button {
@@ -204,7 +205,7 @@ Rectangle {
             id: login
             text: "Login"
             anchors.right: parent.right; width: 100; height: 32; anchors.bottom: parent.bottom; anchors.bottomMargin: 5
-            onClicked: {generalRec.state = "connecting"; client.connect(server.text,port.text,nick.text,pwd.text)}
+            onClicked: {generalRec.state = "connected"; client.connect(server.text,port.text,nick.text,pwd.text)}
             Keys.onEnterPressed: {generalRec.state = "connecting"; client.connect(server.text,port.text,nick.text,pwd.text)}
             KeyNavigation.tab: server
         }

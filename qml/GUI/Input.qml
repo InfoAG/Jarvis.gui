@@ -19,5 +19,21 @@ FocusScope {
         focus: true
         onAccepted:{container.accepted()}
         selectByMouse: true
+
+        Keys.onPressed: {
+                 if ((event.key === Qt.Key_Return) && (event.modifiers & Qt.ShiftModifier))
+                     expandInput();
+             }
+
+        function expandInput()
+        {
+            if(input.height < (generalRec.height/3))
+            {
+                 input.height += 32;
+                 container.height += 32;
+            }
+        }
+
+
     }
 }
