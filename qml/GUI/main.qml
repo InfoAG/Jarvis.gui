@@ -1,10 +1,19 @@
 import QtQuick 1.1
+import JarvisClient 0.1
 
 Rectangle {
     id: generalRec
     width: 700
     height: 400
     radius: 0
+
+    JarvisClient
+    {
+        id: client
+        onReceivedInitInfo: generalRec.state = "connected";
+
+    }
+
 
     Rectangle {
             id: background
@@ -60,7 +69,7 @@ Rectangle {
         MouseArea
         {
             anchors.fill: parent
-            onClicked: generalRec.state = ""
+            onClicked: {generalRec.state = "connecting";generalRec.state = "";client.disconnect();}
         }
     }
 
@@ -72,10 +81,9 @@ Rectangle {
         anchors.centerIn: parent
         id: loginwindow
 
-        Image
+        Loading
         {
             id: loading
-            source: "../../images/loading.png"
             z:101
             visible: false
             anchors.right: login.left
@@ -83,8 +91,6 @@ Rectangle {
             anchors.bottomMargin: 5
             anchors.rightMargin: 5
             height: 32
-            smooth: false
-            opacity: 1
         }
 
         Text
@@ -110,6 +116,8 @@ Rectangle {
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.topMargin: 5
+            text: "192.168.178.26";
+            KeyNavigation.tab: port;
         }
 
         Text
@@ -134,6 +142,8 @@ Rectangle {
             anchors.right: parent.right
             anchors.top: server.bottom
             anchors.topMargin: 5
+            text: "4200";
+            KeyNavigation.tab: nick
         }
 
         Text
@@ -158,6 +168,8 @@ Rectangle {
             anchors.right: parent.right
             anchors.top: port.bottom
             anchors.topMargin: 5
+            text: "Herp";
+            KeyNavigation.tab: pwd
         }
 
         Text
@@ -173,7 +185,7 @@ Rectangle {
             anchors.left: parent.left
             anchors.top: ntext.bottom
             height: 32
-            anchors.topMargin: 5
+            anchors.topMargin: 5 
         }
         Input
         {
@@ -182,6 +194,9 @@ Rectangle {
             anchors.right: parent.right
             anchors.top: nick.bottom
             anchors.topMargin: 5
+            text: "";
+            item.readOnly: false
+            KeyNavigation.tab: login
         }
 
         Button
@@ -189,10 +204,15 @@ Rectangle {
             id: login
             text: "Login"
             anchors.right: parent.right; width: 100; height: 32; anchors.bottom: parent.bottom; anchors.bottomMargin: 5
-            onClicked: generalRec.state = "connecting"
+            onClicked: {generalRec.state = "connecting"; client.connect(server.text,port.text,nick.text,pwd.text)}
+            Keys.onEnterPressed: {generalRec.state = "connecting"; client.connect(server.text,port.text,nick.text,pwd.text)}
+            KeyNavigation.tab: server
         }
 
+
     }
+
+
 
 
 
@@ -214,7 +234,11 @@ Rectangle {
 
             name: "connecting";
             PropertyChanges{ target: staterec; opacity: 0.500; z:3}
-            PropertyChanges{ target: loading; z: 102; visible: true; rotation: 1500}
+            PropertyChanges{ target: loading; visible: true;}
+            PropertyChanges{target: server.item; readOnly: true}
+            PropertyChanges{target: port.item; readOnly: true}
+            PropertyChanges{target: nick.item; readOnly: true}
+            PropertyChanges{target: pwd.item; readOnly: true}
         }
 
     ]
@@ -233,17 +257,15 @@ Rectangle {
         },
 
         Transition {
-            from: ""; to: "connecting";
+            from: ""; to: "connecting"; reversible: true
             ParallelAnimation
             {
-                NumberAnimation{properties: "z"; duration: 600}
-                NumberAnimation{properties: "visible"; duration: 100}
-                RotationAnimation { duration: 500; direction: RotationAnimation.Counterclockwise }
-            }
+                NumberAnimation{properties:"visible";duration:100}
+                NumberAnimation{properties:"opacity";duration:600}
 
+            }
         }
     ]
-
 
 
 }

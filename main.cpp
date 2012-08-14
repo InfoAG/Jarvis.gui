@@ -1,18 +1,18 @@
-#include <QtGui/QApplication>
+#include <QApplication>
 #include <QtDeclarative>
-//#include "qmlapplicationviewer.h"
+#include "qmlapplicationviewer.h"
 #include "JarvisClient.h"
 
-int main(int argc, char *argv[])
+Q_DECL_EXPORT int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+    QScopedPointer<QApplication> app(createApplication(argc, argv));
 
-    //qmlRegisterType<JarvisClient>();
+    qmlRegisterType<JarvisClient>("JarvisClient",0,1,"JarvisClient");
 
-    QDeclarativeView viewer;
-    //viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
-    viewer.setSource(QUrl("qml/GUI/main.qml"));
-    viewer.show();
+    QmlApplicationViewer viewer;
+    viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+    viewer.setMainQmlFile(QLatin1String("qml/GUI/main.qml"));
+    viewer.showExpanded();
 
-    return app.exec();
+    return app->exec();
 }

@@ -10,7 +10,13 @@ symbian:TARGET.UID3 = 0xED9CD242
 
 QMAKE_CXXFLAGS += -std=c++11
 
-QT += network
+LIBS += $$PWD/../Jarvis.Frontend/debug/Jarvis-Frontend.dll
+INCLUDEPATH += $$PWD/../Jarvis.Frontend/
+
+
+QT += network \
+    gui \
+    core
 
 # Smart Installer package's UID
 # This UID is from the protected range and therefore the package will

@@ -26,7 +26,7 @@ Item {
     }
     Text {
         id: btnText
-        color: if(container.keyUsing){"#D0D0D0";} else {"#FFFFFF";}
+        color: if(container.keyUsing){"#FFFFFF";} else {"#FFFFFF";}
         anchors.centerIn: buttonImage; font.bold: true
         text: container.text; style: Text.Raised; styleColor: "black"
         font.pixelSize: 12
@@ -34,18 +34,15 @@ Item {
     states: [
         State {
             name: "Pressed"
-            when: mouseRegion.pressed == true
+            when: mouseRegion.pressed === true
             PropertyChanges { target: pressed; opacity: 0.670 }
-
-            PropertyChanges {
-                target: buttonImage
-                opacity: 0.490
-            }
+            PropertyChanges { target: btnText; color: "#3CB371" }
+            PropertyChanges { target: buttonImage; opacity: 0.490}
         },
         State {
             name: "Focused"
-            when: container.activeFocus == true
-            PropertyChanges { target: btnText; color: "#FFFFFF" }
+            when: container.activeFocus === true
+            PropertyChanges { target: btnText; color: "#3CB371" }
         }
 
 
