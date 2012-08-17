@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import JarvisClient 0.1
+import Scope 0.1
 
 Rectangle {
     id: generalRec
@@ -7,14 +8,21 @@ Rectangle {
     height: 400
     radius: 0
 
+    //Object of JarvisClient
     JarvisClient
     {
         id: client
         onReceivedInitInfo: generalRec.state = "connected";
+        onEnteredScope:
+        {
+            console.log("enteredScope emitted")
+            scoperec.addItem(name);
+            userrec.fill(info)
+        }
 
     }
 
-
+    //Backgroundimage
     Rectangle {
             id: background
             anchors.fill: parent; color: "#343434";
@@ -22,11 +30,10 @@ Rectangle {
             Image { source: "../../images/stripes.png"; fillMode: Image.Tile; anchors.fill: parent; opacity: 0.3 }
            }
 
-    //LISTVIEW-GEDÖNS
-
+    //first Rectangle = Scopes, second = Userlist
     Rectangle
     {
-        id: modelrec
+        id: scoperec
         width: generalRec.width/6
         visible: false
         anchors.margins: 5
@@ -42,6 +49,7 @@ Rectangle {
         }
         TextInput
         {
+            id: nstext
             y: listitem.number*20
             anchors.left: parent.left
             anchors.right: parent.right
@@ -49,30 +57,82 @@ Rectangle {
             height:15
             text: "new Scope"
 
+
             onAccepted:
             {
-                modelrec.addItem(text)
+                client.enterScope(text)
                 text = "new Scope"
             }
         }
 
-        MouseArea
-        {
-            width:20
-            height:20
-            anchors.bottom: parent.bottom
-            anchors.left: parent.left
-            onClicked: modelrec.addItem("herp")
-            Rectangle{anchors.fill: parent; color:"black"}
 
-        }
 
 
         function addItem(scopename)
         {
-            listitem.model.append({"name":scopename});
+            console.log("Enterd with:");
+            console.log(scopename);
+
+            var elements = listitem.number
+
+            if(elements == 0)
+                listitem.model.append({"name":scopename});
+            else
+            {
+                for(var i = 0; i < elements; i++)
+                {
+                    console.log(scopename)
+                    console.log(listitem.model.get(i).name)
+
+                    if(listitem.model.get(i).name == scopename)
+                        break;
+
+                    if(listitem.model.get(i).name > scopename)
+                    {
+                        listitem.model.insert(i,{"name":scopename});
+                        break;
+
+                    }
+
+                    if(i == elements-1)
+                        listitem.model.append({"name":scopename});
+
+                }
+            }
+
             client.enterScope(scopename)
         }
+    }
+
+
+
+
+
+
+
+    Rectangle
+    {
+        id: userrec
+        width: generalRec.width/6
+        visible: false
+        anchors.margins: 5
+        anchors.bottom: sendbutton.top
+        anchors.top: parent.top
+        anchors.right: parent.right
+        color: "white"
+
+
+        ListItem
+        {
+            id: listitem2
+            width: generalRec.width/6
+        }
+
+        function fill(info)
+        {
+
+        }
+
     }
 
 
@@ -185,7 +245,7 @@ Rectangle {
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.topMargin: 5
-            text:"176.198.129.70";
+            text:"localhost";
             KeyNavigation.tab: port;
         }
 
@@ -297,17 +357,9 @@ Rectangle {
             PropertyChanges { target: input; focus: true; visible: true}
             PropertyChanges{ target: sendbutton; visible: true}
             PropertyChanges { target: quit; visible: true}
-            PropertyChanges { target: modelrec; visible: true}
+            PropertyChanges { target: scoperec; visible: true}
+            PropertyChanges { target: userrec; visible: true}
 
-            PropertyChanges {
-                target: listitem
-                x: 0
-                y: 0
-                anchors.topMargin: 0
-                anchors.rightMargin: 0
-                anchors.bottomMargin: 0
-                anchors.leftMargin: 0
-            }
         },
 
         State {
