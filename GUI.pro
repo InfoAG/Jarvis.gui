@@ -10,8 +10,8 @@ symbian:TARGET.UID3 = 0xED9CD242
 
 QMAKE_CXXFLAGS += -std=c++11
 
-LIBS += $$PWD/../Jarvis.Frontend/debug/Jarvis-Frontend.dll
-INCLUDEPATH += $$PWD/../Jarvis.Frontend/
+LIBS += -L../Frontend/debug/ -lJarvis-Frontend
+INCLUDEPATH += ../Frontend/
 
 
 QT += network \

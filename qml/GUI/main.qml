@@ -22,6 +22,73 @@ Rectangle {
             Image { source: "../../images/stripes.png"; fillMode: Image.Tile; anchors.fill: parent; opacity: 0.3 }
            }
 
+    //LISTVIEW-GEDÖNS
+
+    Rectangle
+    {
+        id: modelrec
+        width: generalRec.width/6
+        visible: false
+        anchors.margins: 5
+        anchors.bottom: input.top
+        anchors.top: parent.top
+        anchors.left: parent.left
+        color: "white"
+
+        ListItem
+        {
+            id: listitem
+            width: generalRec.width/6
+        }
+        TextInput
+        {
+            y: listitem.number*20
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.margins: 5
+            height:15
+            text: "new Scope"
+
+            onAccepted:
+            {
+                modelrec.addItem(text)
+                text = "new Scope"
+            }
+        }
+
+        MouseArea
+        {
+            width:20
+            height:20
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            onClicked: modelrec.addItem("herp")
+            Rectangle{anchors.fill: parent; color:"black"}
+
+        }
+
+
+        function addItem(scopename)
+        {
+            listitem.model.append({"name":scopename});
+            client.enterScope(scopename)
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     Input{
             id: input
@@ -30,6 +97,7 @@ Rectangle {
            x:generalRec.width+500
            y:generalRec.height+500
            visible: false
+           item.horizontalAlignment: Qt.AlignLeft
            anchors.bottomMargin: 5; anchors.leftMargin: 5; anchors.rightMargin: 5
            onAccepted: {sendbutton.state = "Pressed"; sendbutton.state=""}
 
@@ -117,7 +185,7 @@ Rectangle {
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.topMargin: 5
-            text: "192.168.178.26";
+            text:"176.198.129.70";
             KeyNavigation.tab: port;
         }
 
@@ -205,7 +273,7 @@ Rectangle {
             id: login
             text: "Login"
             anchors.right: parent.right; width: 100; height: 32; anchors.bottom: parent.bottom; anchors.bottomMargin: 5
-            onClicked: {generalRec.state = "connected"; client.connect(server.text,port.text,nick.text,pwd.text)}
+            onClicked: {generalRec.state = "connecting"; client.connect(server.text,port.text,nick.text,pwd.text)}
             Keys.onEnterPressed: {generalRec.state = "connecting"; client.connect(server.text,port.text,nick.text,pwd.text)}
             KeyNavigation.tab: server
         }
@@ -229,6 +297,17 @@ Rectangle {
             PropertyChanges { target: input; focus: true; visible: true}
             PropertyChanges{ target: sendbutton; visible: true}
             PropertyChanges { target: quit; visible: true}
+            PropertyChanges { target: modelrec; visible: true}
+
+            PropertyChanges {
+                target: listitem
+                x: 0
+                y: 0
+                anchors.topMargin: 0
+                anchors.rightMargin: 0
+                anchors.bottomMargin: 0
+                anchors.leftMargin: 0
+            }
         },
 
         State {
