@@ -15,9 +15,12 @@ Rectangle {
         onReceivedInitInfo: generalRec.state = "connected";
         onEnteredScope:
         {
-            console.log("enteredScope emitted")
             scoperec.addItem(name);
             userrec.fill(info)
+        }
+        onError:
+        {
+            console.log("error");
         }
 
     }
@@ -70,7 +73,7 @@ Rectangle {
 
         function addItem(scopename)
         {
-            console.log("Enterd with:");
+            console.log("addItem");
             console.log(scopename);
 
             var elements = listitem.number
@@ -99,8 +102,6 @@ Rectangle {
 
                 }
             }
-
-            client.enterScope(scopename)
         }
     }
 
@@ -159,7 +160,7 @@ Rectangle {
            visible: false
            item.horizontalAlignment: Qt.AlignLeft
            anchors.bottomMargin: 5; anchors.leftMargin: 5; anchors.rightMargin: 5
-           onAccepted: {sendbutton.state = "Pressed"; sendbutton.state=""}
+           onAccepted: {sendbutton.state = "Pressed"; sendbutton.state="";}
 
         }
 
