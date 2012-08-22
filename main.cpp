@@ -9,7 +9,6 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QScopedPointer<QApplication> app(createApplication(argc, argv));
 
     qmlRegisterType<JarvisClient>("JarvisClient",0,1,"JarvisClient");
-    qmlRegisterType<JarvisClient>("Scope",0,1,"Scope");
 
     QmlApplicationViewer viewer;
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);

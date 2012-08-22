@@ -6,6 +6,7 @@ Item
     anchors.fill: parent
     property alias model: scopeModel
     property alias number: listview.count
+    property alias hideBar: scrollbar.hideScrollBarsWhenStopped
 
     ListModel
     {
@@ -36,6 +37,17 @@ Item
         anchors.fill: parent
         model: scopeModel
         delegate: scopeDelegate
+        highlight: Rectangle { id: highlightrec; color: "mediumseagreen"; radius: 5 }
+        focus: true
     }
+
+
+    ScrollBar
+    {
+        id: scrollbar
+        flickable: listview
+        vertical: true
+    }
+
 
 }

@@ -1,6 +1,5 @@
 import QtQuick 1.1
 import JarvisClient 0.1
-import Scope 0.1
 
 Rectangle {
     id: generalRec
@@ -49,22 +48,14 @@ Rectangle {
         {
             id: listitem
             width: generalRec.width/6
+            height:scoperec.height
+            hideBar: false
         }
-
-//        ScrollBar {
-//            id: verticalScrollBar
-//            width: 12; height: view.height-12
-//            anchors.right: view.right
-//            opacity: 0
-//            orientation: Qt.Vertical
-//            position: view.visibleArea.yPosition
-//            pageSize: view.visibleArea.heightRatio
-//        }
 
         TextInput
         {
             id: nstext
-            y: listitem.number*20
+            y: listitem.number*15
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.margins: 5
@@ -98,8 +89,6 @@ Rectangle {
                     console.log(scopename)
                     console.log(listitem.model.get(i).name)
 
-                    if(listitem.model.get(i).name == scopename)
-                        break;
 
                     if(listitem.model.get(i).name > scopename)
                     {
@@ -108,8 +97,12 @@ Rectangle {
 
                     }
 
-                    if(i == elements-1)
+                    if(i === elements-1)
+                    {
                         listitem.model.append({"name":scopename});
+                    }
+
+
 
                 }
             }

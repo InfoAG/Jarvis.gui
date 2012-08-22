@@ -1,30 +1,40 @@
-import QtQuick 1.1
+import Qt 4.7
 
-Item {
-    id: scrollBar
+Rectangle {
+    // The flickable to which the scrollbar is attached to, must be set
+    property variant flickable
 
-    //wenn pagesize 0.5 is dann kann mabn 50% sehen
-    property real position
-    property real pageSize
-    property variant orientation : Qt.Vertical
+    // True for vertical ScrollBar, false for horizontal
+    property bool vertical: true
 
-    // A light, semi-transparent background
-    Rectangle {
-        id: background
-        anchors.fill: parent
-        radius: orientation == Qt.Vertical ? (width/2 - 1) : (height/2 - 1)
-        color: "white"
-        opacity: 0.3
+    // If set to false, scrollbar is visible even when not scrolling
+    property bool hideScrollBarsWhenStopped: true
+
+    // Thickness of the scrollbar, in pixels
+    property int scrollbarWidth: 7
+
+    color: "black"
+    radius: vertical ? width/2 : height/2
+
+    function sbOpacity()
+    {
+        if (!hideScrollBarsWhenStopped) {
+            return 0.5;
+        }
+
+        return (flickable.flicking || flickable.moving) ? (vertical ? (height >= parent.height ? 0 : 0.5) : (width >= parent.width ? 0 : 0.5)) : 0;
     }
 
-    // Size the bar to the required size, depending upon the orientation.
-    Rectangle {
-        x: orientation == Qt.Vertical ? 1 : (scrollBar.position * (scrollBar.width-2) + 1)
-        y: orientation == Qt.Vertical ? (scrollBar.position * (scrollBar.height-2) + 1) : 1
-        width: orientation == Qt.Vertical ? (parent.width-2) : (scrollBar.pageSize * (scrollBar.width-2))
-        height: orientation == Qt.Vertical ? (scrollBar.pageSize * (scrollBar.height-2)) : (parent.height-2)
-        radius: orientation == Qt.Vertical ? (width/2 - 1) : (height/2 - 1)
-        color: "black"
-        opacity: 0.7
-    }
+    // Scrollbar appears automatically when content is bigger than the Flickable
+    opacity: sbOpacity()
+
+    // Calculate width/height and position based on the content size and position of
+    // the Flickable
+    width: vertical ? scrollbarWidth : flickable.visibleArea.widthRatio * parent.width
+    height: vertical ? flickable.visibleArea.heightRatio * parent.height : scrollbarWidth
+    x: vertical ? parent.width - width : flickable.visibleArea.xPosition * parent.width
+    y: vertical ? flickable.visibleArea.yPosition * parent.height : parent.height - height
+
+    // Animate scrollbar appearing/disappearing
+    Behavior on opacity { NumberAnimation { duration: 200 }}
 }
