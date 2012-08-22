@@ -50,6 +50,17 @@ Rectangle {
             id: listitem
             width: generalRec.width/6
         }
+
+//        ScrollBar {
+//            id: verticalScrollBar
+//            width: 12; height: view.height-12
+//            anchors.right: view.right
+//            opacity: 0
+//            orientation: Qt.Vertical
+//            position: view.visibleArea.yPosition
+//            pageSize: view.visibleArea.heightRatio
+//        }
+
         TextInput
         {
             id: nstext

@@ -1,0 +1,12 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+
+<qresource prefix="/">
+	<file>main.qml</file>
+	<file>images/lineedit.png</file>
+	<file>images/lineedit.sci</file>
+	<file>images/stripes.png</file>
+	<file>images/quit.png</file>
+</qresource>
+
+</RCC>
