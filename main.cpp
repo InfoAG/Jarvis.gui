@@ -1,15 +1,14 @@
 #include <QApplication>
 #include <QtDeclarative>
 #include "qmlapplicationviewer.h"
-#include "JarvisClient.h"
+#include "QMLJarvisClient.h"
 #include "Scope.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
     QScopedPointer<QApplication> app(createApplication(argc, argv));
 
-    qmlRegisterType<JarvisClient>("JarvisClient",0,1,"JarvisClient");
-    qmlRegisterType<JarvisClient>("Scope",0,1,"Scope");
+    qmlRegisterType<QMLJarvisClient>("QMLJarvisClient",0,1,"QMLJarvisClient");
 
     QmlApplicationViewer viewer;
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);

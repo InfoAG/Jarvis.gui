@@ -1,6 +1,5 @@
 import QtQuick 1.1
-import JarvisClient 0.1
-import Scope 0.1
+import QMLJarvisClient 0.1
 
 Rectangle {
     id: generalRec
@@ -9,10 +8,13 @@ Rectangle {
     radius: 0
 
     //Object of JarvisClient
-    JarvisClient
+    QMLJarvisClient
     {
         id: client
-        onReceivedInitInfo: generalRec.state = "connected";
+        onReceivedInitInfo: {
+            generalRec.state = "connected"
+            console.log(pkgs[0]);
+        }
         onEnteredScope:
         {
             scoperec.addItem(name);

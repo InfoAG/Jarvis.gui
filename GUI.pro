@@ -41,6 +41,7 @@ symbian:TARGET.CAPABILITY += NetworkServices
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
+    QMLJarvisClient.cpp
 
 
 # Please do not modify the following two lines. Required for deployment.
@@ -57,3 +58,7 @@ OTHER_FILES += \
     images/loading.png \
     images/lineedit.sci \
     images/lineedit.png
+
+HEADERS += \
+    QMLJarvisClient.h \
+    Scope.h
