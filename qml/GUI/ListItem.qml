@@ -28,6 +28,16 @@ Item
             {
                 text: name;
             }
+
+            MouseArea
+            {
+                anchors.fill: parent
+
+                onClicked:
+                {
+                    listview.currentIndex = index;
+                }
+            }
         }
     }
 
@@ -37,7 +47,8 @@ Item
         anchors.fill: parent
         model: scopeModel
         delegate: scopeDelegate
-        highlight: Rectangle { id: highlightrec; color: "mediumseagreen"; radius: 5 }
+        highlight: highrec
+        highlightFollowsCurrentItem: false
         focus: true
     }
 
@@ -48,6 +59,21 @@ Item
         flickable: listview
         vertical: true
     }
+
+
+    Component {
+              id: highrec
+              Rectangle {
+                  anchors.left: parent.left
+                  anchors.right: parent.right
+                  height:15
+                  radius: 5
+                  color: "mediumseagreen"
+                  y: listview.currentItem.y;
+                  x: listview.currentItem.x-3;
+                  Behavior on y { PropertyAnimation {} }
+              }
+          }
 
 
 }

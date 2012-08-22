@@ -102,8 +102,6 @@ Rectangle {
                         listitem.model.append({"name":scopename});
                     }
 
-
-
                 }
             }
         }
