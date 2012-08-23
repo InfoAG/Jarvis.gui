@@ -61,4 +61,5 @@ OTHER_FILES += \
 
 HEADERS += \
     QMLJarvisClient.h \
-    Scope.h
+    QMLScope.h \
+    QMLModulePackage.h
