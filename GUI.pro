@@ -57,3 +57,6 @@ OTHER_FILES += \
     images/loading.png \
     images/lineedit.sci \
     images/lineedit.png
+
+RESOURCES += \
+    ressources.qrc
