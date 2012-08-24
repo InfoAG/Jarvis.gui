@@ -57,7 +57,7 @@ OTHER_FILES += \
     images/loading.png \
     images/lineedit.sci \
     images/lineedit.png \
-    z-index.js
+    map.js
 
 RESOURCES += \
     ressources.qrc

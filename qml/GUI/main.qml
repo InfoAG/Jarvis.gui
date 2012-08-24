@@ -1,6 +1,6 @@
 import QtQuick 1.1
 import JarvisClient 0.1
-import "../../z-index.js" as StackIndex
+import "../../map.js" as StackMap
 
 Rectangle {
     id: generalRec
@@ -23,15 +23,16 @@ Rectangle {
 
             if(listitem.number == 1)
             {
-                var stack = component.createObject(generalRec, {"name":scopename, "anchors.margins": 5, "anchors.right": generalRec.right, "anchors.left": scoperec.right, "anchors.top": generalRec.top, "anchors.bottom": input.top, "userwidth": generalRec.width/6, "z": StackIndex});
-                StackIndex.map[scopename] = stack;
+                var stack = component.createObject(generalRec, {"name":scopename, "anchors.margins": 5, "anchors.right": generalRec.right, "anchors.left": scoperec.right, "anchors.top": generalRec.top, "anchors.bottom": input.top, "userwidth": generalRec.width/6, "visible": true});
+                StackMap.map[scopename] = stack;
+                StackMap.lastFocusedObject = stack;
 
             }
 
             else
             {
-                var stack = component.createObject(generalRec, {"name":scopename, "anchors.margins": 5, "anchors.right": generalRec.right, "anchors.left": scoperec.right, "anchors.top": generalRec.top, "anchors.bottom": input.top, "userwidth": generalRec.width/6, "z": StackIndex-1});
-                StackIndex.map[scopename] = stack;
+                var stack = component.createObject(generalRec, {"name":scopename, "anchors.margins": 5, "anchors.right": generalRec.right, "anchors.left": scoperec.right, "anchors.top": generalRec.top, "anchors.bottom": input.top, "userwidth": generalRec.width/6, "visible": false});
+                StackMap.map[scopename] = stack;
             }
 
 
@@ -43,6 +44,15 @@ Rectangle {
 
 
         }
+
+        onMsgInScope:
+        {
+            var scopename = scope;
+            var component = StackMap.map[scopename];
+            component.write(scope,sender,msg);
+
+        }
+
         onError:
         {
             console.log("error");
@@ -81,9 +91,10 @@ Rectangle {
             onFocusChanged:
             {
                 var scopename = name;
-                StackIndex+=1;
-                var component = StackIndex.map[scopename];
-                component.z = StackIndex;
+                var component = StackMap.map[scopename];
+                StackMap.lastFocusedObject.visible = false;
+                component.visible = true;
+                StackMap.lastFocusedObject = component;
 
             }
         }
@@ -125,7 +136,7 @@ Rectangle {
             sendbutton.state = "Pressed";
             sendbutton.state="";
 
-            var scope = listitem.model.get(listitem.currentIndex).name;
+            var scope = StackMap.lastFocusedObject.name;
             client.msgToScope(scope,text);
             input.text = "";
         }

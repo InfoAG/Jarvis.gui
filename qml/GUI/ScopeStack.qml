@@ -5,9 +5,10 @@ Rectangle {
 
     property alias userwidth: userlist.width;
     property string name;
+    property alias outputtxt: outputtext
 
-    //width: 550
-    //height: 380
+    width: 550
+    height: 380
     id: container
     color: "transparent"
     border.width: 2
@@ -21,6 +22,34 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.margins: 5
         anchors.right: userlist.left
+
+        Text
+        {
+            id:outputtext
+            anchors.fill: parent
+            anchors.margins: 5
+
+        }
+
+
+
+        Text
+        {
+            text: name
+            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.margins: 5
+            color: "black"
+            Rectangle
+            {
+                anchors.centerIn: parent
+                width: parent.width+10
+                height: parent.height+10
+                color: "mediumseagreen"
+                opacity: 0.1
+            }
+        }
+
     }
 
     Rectangle
@@ -31,4 +60,45 @@ Rectangle {
         anchors.right: parent.right
         anchors.margins: 5
     }
+
+
+
+
+
+
+
+
+    function write(scope,sender,msg)
+    {
+        outputtext.text += sender + ": " + msg + "\n";
+    }
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
