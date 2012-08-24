@@ -14,7 +14,7 @@ Rectangle {
         id: client
         onReceivedInitInfoQML: {
             generalRec.state = "connected"
-            console.log(pkgs[0].name);
+            console.log(pkgs[0].operators[0].name);
         }
         onEnteredScopeQML:
         {

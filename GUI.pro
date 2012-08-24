@@ -43,7 +43,6 @@ symbian:TARGET.CAPABILITY += NetworkServices
 SOURCES += main.cpp \
     QMLJarvisClient.cpp \
     QMLModulePackage.cpp \
-    QMLFunctionModule.cpp \
     QMLScope.cpp
 
 

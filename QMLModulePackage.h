@@ -1,7 +1,6 @@
 #ifndef QMLMODULEPACKAGE_H
 #define QMLMODULEPACKAGE_H
 
-#include <QVariant>
 #include "ModulePackage.h"
 #include "QMLModule.h"
 #include "QMLOperatorModule.h"
@@ -16,7 +15,6 @@ struct QMLModulePackage : public QObject
     Q_PROPERTY(QList<QObject*> functions READ functions)
 
 public:
-    QMLModulePackage() {}
     QMLModulePackage(const ModulePackage &pkg);
 
     QString name() const { return name_; }

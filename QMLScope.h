@@ -27,7 +27,4 @@ public:
     QList<QObject*> functions() const { return functions_; }
 };
 
-typedef QMap<QString, QString> VarDefs;
-typedef QMap<QString, QPair<QStringList, QString>> FuncDefs;
-
 #endif // QMLSCOPE_H
