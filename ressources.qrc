@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/lineedit.png</file>
+        <file>images/lineedit.sci</file>
+        <file>images/loading.png</file>
+        <file>images/quit.png</file>
+        <file>images/stripes.png</file>
+        <file>images/Thumbs.db</file>
+        <file>images/titlebar.png</file>
+        <file>images/titlebar.sci</file>
+        <file>images/toolbutton.png</file>
+        <file>images/toolbutton.sci</file>
+        <file>qml/GUI/Button.qml</file>
+        <file>qml/GUI/Input.qml</file>
+        <file>qml/GUI/ListItem.qml</file>
+        <file>qml/GUI/Loading.qml</file>
+        <file>qml/GUI/main.qml</file>
+        <file>qml/GUI/ScrollBar.qml</file>
+    </qresource>
+</RCC>
