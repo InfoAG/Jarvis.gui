@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import QMLJarvisClient 0.1
+import "../../map.js" as StackMap
 
 Rectangle {
     id: generalRec
@@ -11,15 +12,50 @@ Rectangle {
     QMLJarvisClient
     {
         id: client
-        onReceivedInitInfo: {
+        onReceivedInitInfoQML: {
             generalRec.state = "connected"
-            console.log(pkgs[0]);
+            console.log(pkgs[0].name);
         }
-        onEnteredScope:
+        onEnteredScopeQML:
         {
-            scoperec.addItem(name);
-            userrec.fill(info)
+            listitem.append(name);
+
+            var scopename = name;
+            var component = Qt.createComponent("ScopeStack.qml");
+
+
+            if(listitem.number == 1)
+            {
+                var stack = component.createObject(generalRec, {"name":scopename, "anchors.margins": 5, "anchors.right": generalRec.right, "anchors.left": scoperec.right, "anchors.top": generalRec.top, "anchors.bottom": input.top, "userwidth": generalRec.width/6, "visible": true});
+                StackMap.map[scopename] = stack;
+                StackMap.lastFocusedObject = stack;
+
+            }
+
+            else
+            {
+                var stack = component.createObject(generalRec, {"name":scopename, "anchors.margins": 5, "anchors.right": generalRec.right, "anchors.left": scoperec.right, "anchors.top": generalRec.top, "anchors.bottom": input.top, "userwidth": generalRec.width/6, "visible": false});
+                StackMap.map[scopename] = stack;
+            }
+
+
+
+            if (component.status == Component.Error) {
+                     console.log("Error loading component:", component.errorString());
+            }
+
+
+
         }
+
+        onMsgInScope:
+        {
+            var scopename = scope;
+            var component = StackMap.map[scopename];
+            component.write(scope,sender,msg);
+
+        }
+
         onError:
         {
             console.log("error");
@@ -45,17 +81,31 @@ Rectangle {
         anchors.bottom: input.top
         anchors.top: parent.top
         anchors.left: parent.left
-        color: "white"
+        color: "grey"
+        border.width: 2
+        border.color: "mediumseagreen"
 
         ListItem
         {
             id: listitem
-            width: generalRec.width/6
+            anchors.margins: 5
+            anchors.fill: parent
+            hideBar: false
+            onFocusChanged:
+            {
+                var scopename = name;
+                var component = StackMap.map[scopename];
+                StackMap.lastFocusedObject.visible = false;
+                component.visible = true;
+                StackMap.lastFocusedObject = component;
+
+            }
         }
+
         TextInput
         {
             id: nstext
-            y: listitem.number*20
+            y: listitem.number*15
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.margins: 5
@@ -69,102 +119,32 @@ Rectangle {
                 text = "new Scope"
             }
         }
-
-
-
-
-        function addItem(scopename)
-        {
-            console.log("addItem");
-            console.log(scopename);
-
-            var elements = listitem.number
-
-            if(elements == 0)
-                listitem.model.append({"name":scopename});
-            else
-            {
-                for(var i = 0; i < elements; i++)
-                {
-                    console.log(scopename)
-                    console.log(listitem.model.get(i).name)
-
-                    if(listitem.model.get(i).name == scopename)
-                        break;
-
-                    if(listitem.model.get(i).name > scopename)
-                    {
-                        listitem.model.insert(i,{"name":scopename});
-                        break;
-
-                    }
-
-                    if(i == elements-1)
-                        listitem.model.append({"name":scopename});
-
-                }
-            }
-        }
     }
 
 
 
 
 
-
-
-    Rectangle
+    Input
     {
-        id: userrec
-        width: generalRec.width/6
+        id: input
+        focus: true
+        x:generalRec.width+500
+        y:generalRec.height+500
         visible: false
-        anchors.margins: 5
-        anchors.bottom: sendbutton.top
-        anchors.top: parent.top
-        anchors.right: parent.right
-        color: "white"
-
-
-        ListItem
+        item.horizontalAlignment: Qt.AlignLeft
+        anchors.bottomMargin: 5; anchors.leftMargin: 5; anchors.rightMargin: 5
+        onAccepted:
         {
-            id: listitem2
-            width: generalRec.width/6
-        }
+            sendbutton.state = "Pressed";
+            sendbutton.state="";
 
-        function fill(info)
-        {
-
+            var scope = StackMap.lastFocusedObject.name;
+            client.msgToScope(scope,text);
+            input.text = "";
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    Input{
-            id: input
-           //onAccepted:searchbutton.doSearch();
-           focus: true
-           x:generalRec.width+500
-           y:generalRec.height+500
-           visible: false
-           item.horizontalAlignment: Qt.AlignLeft
-           anchors.bottomMargin: 5; anchors.leftMargin: 5; anchors.rightMargin: 5
-           onAccepted: {sendbutton.state = "Pressed"; sendbutton.state="";}
-
-        }
 
     Button {
         id: sendbutton
@@ -196,7 +176,8 @@ Rectangle {
         id: quit
         source: "../../images/quit.png"
         visible: false
-
+        width: 30
+        height: 30
         x:generalRec.width+500; y:generalRec.height+500
         MouseArea
         {
@@ -361,8 +342,6 @@ Rectangle {
             PropertyChanges{ target: sendbutton; visible: true}
             PropertyChanges { target: quit; visible: true}
             PropertyChanges { target: scoperec; visible: true}
-            PropertyChanges { target: userrec; visible: true}
-
         },
 
         State {

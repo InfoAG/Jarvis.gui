@@ -20,3 +20,7 @@ debug/
 release/
 *.autosave
 object_script.*
+GUI
+!GUI/
+moc_qmlapplicationviewer.cpp
+qrc_ressources.cpp

@@ -60,7 +60,8 @@ OTHER_FILES += \
     images/quit.png \
     images/loading.png \
     images/lineedit.sci \
-    images/lineedit.png
+    images/lineedit.png \
+    map.js
 
 HEADERS += \
     QMLJarvisClient.h \
@@ -70,3 +71,6 @@ HEADERS += \
     QMLOperatorModule.h \
     QMLFunctionModule.h \
     QMLFunctionDefinition.h
+
+RESOURCES += \
+    ressources.qrc
