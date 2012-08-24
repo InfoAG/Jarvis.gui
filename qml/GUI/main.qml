@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import JarvisClient 0.1
+import "../../z-index.js" as StackIndex
 
 Rectangle {
     id: generalRec
@@ -17,7 +18,30 @@ Rectangle {
             listitem.append(name);
 
             var scopename = name;
-            //var object =
+            var component = Qt.createComponent("ScopeStack.qml");
+
+
+            if(listitem.number == 1)
+            {
+                var stack = component.createObject(generalRec, {"name":scopename, "anchors.margins": 5, "anchors.right": generalRec.right, "anchors.left": scoperec.right, "anchors.top": generalRec.top, "anchors.bottom": input.top, "userwidth": generalRec.width/6, "z": StackIndex});
+                StackIndex.map[scopename] = stack;
+
+            }
+
+            else
+            {
+                var stack = component.createObject(generalRec, {"name":scopename, "anchors.margins": 5, "anchors.right": generalRec.right, "anchors.left": scoperec.right, "anchors.top": generalRec.top, "anchors.bottom": input.top, "userwidth": generalRec.width/6, "z": StackIndex-1});
+                StackIndex.map[scopename] = stack;
+            }
+
+
+
+            if (component.status == Component.Error) {
+                     console.log("Error loading component:", component.errorString());
+            }
+
+
+
         }
         onError:
         {
@@ -51,11 +75,17 @@ Rectangle {
         ListItem
         {
             id: listitem
-            //width: generalRec.width/6
-            //height:scoperec.height
             anchors.margins: 5
             anchors.fill: parent
             hideBar: false
+            onFocusChanged:
+            {
+                var scopename = name;
+                StackIndex+=1;
+                var component = StackIndex.map[scopename];
+                component.z = StackIndex;
+
+            }
         }
 
         TextInput
@@ -76,52 +106,6 @@ Rectangle {
             }
         }
     }
-
-
-
-
-    ScopeStack
-    {
-        anchors.margins: 5
-        anchors.right: parent.right
-        anchors.left: scoperec.right
-        anchors.top: parent.top
-        anchors.bottom: input.top
-        userwidth: generalRec.width/6
-    }
-
-
-
-
-
-
-
-
-//    Rectangle
-//    {
-//        id: userrec
-//        width: generalRec.width/6
-//        visible: false
-//        anchors.margins: 5
-//        anchors.bottom: sendbutton.top
-//        anchors.top: parent.top
-//        anchors.right: parent.right
-//        color: "white"
-
-
-//        ListItem
-//        {
-//            id: listitem2
-//            width: generalRec.width/6
-//        }
-
-//        function fill(info)
-//        {
-
-//        }
-
-//    }
-
 
 
 

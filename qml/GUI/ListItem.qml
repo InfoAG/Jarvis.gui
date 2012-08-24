@@ -9,6 +9,8 @@ Item
     property alias currentIndex: listview.currentIndex
     property alias currentItem: listview.currentItem
     property alias model: scopeModel
+    signal focusChanged(string name)
+
     id: parentitem
 
     ListModel
@@ -29,6 +31,7 @@ Item
 
             Text
             {
+                id: content
                 text: name;
             }
 
@@ -39,6 +42,7 @@ Item
                 onClicked:
                 {
                     listview.currentIndex = index;
+                    parentitem.focusChanged(name);
                 }
             }
         }

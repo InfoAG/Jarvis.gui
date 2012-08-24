@@ -17,5 +17,6 @@
         <file>images/toolbutton.png</file>
         <file>images/toolbutton.sci</file>
         <file>qml/GUI/ScopeStack.qml</file>
+        <file>z-index.js</file>
     </qresource>
 </RCC>

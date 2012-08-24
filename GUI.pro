@@ -56,7 +56,8 @@ OTHER_FILES += \
     images/quit.png \
     images/loading.png \
     images/lineedit.sci \
-    images/lineedit.png
+    images/lineedit.png \
+    z-index.js
 
 RESOURCES += \
     ressources.qrc
