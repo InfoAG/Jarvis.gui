@@ -19,3 +19,4 @@ Makefile*
 debug/
 release/
 *.autosave
+object_script.*

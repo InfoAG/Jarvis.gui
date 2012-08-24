@@ -1,23 +1,33 @@
 #ifndef QMLSCOPE_H
 #define QMLSCOPE_H
 
-#include <QVariant>
-#include <QMetaType>
+#include <QMap>
+#include <QString>
+#include "Scope.h"
+#include <QVariantMap>
+#include "QMLFunctionDefinition.h"
 
-struct QMLScope
+class QMLScope : public QObject
 {   
-    QMLScope(const QStringList &clients, const QMap<QString, QString> &variables,
-             const QMap<QString, QPair<QStringList, QString>> &functions)
-        : clients(QVariant::fromValue(clients)), variables(QVariant::fromValue(variables)),
-          functions(QVariant::fromValue(functions)) {}
+    Q_OBJECT
+    Q_PROPERTY(QStringList clients READ clients)
+    Q_PROPERTY(QVariantMap variables READ variables)
+    Q_PROPERTY(QList<QObject*> functions READ functions)
 
-    QVariant clients;
-    QVariant variables;
-    QVariant functions;
+private:
+    QStringList clients_;
+    QVariantMap variables_;
+    QList<QObject*> functions_;
+
+public:
+    QMLScope(const Scope &scope);
+
+    QStringList clients() const { return clients_; }
+    QVariantMap variables() const { return variables_; }
+    QList<QObject*> functions() const { return functions_; }
 };
 
-Q_DECLARE_METATYPE(QMLScope)
-Q_DECLARE_METATYPE(QMap<QString, QString>)
-Q_DECLARE_METATYPE(QMap<QString, QPair<QStringList, QString>>)
+typedef QMap<QString, QString> VarDefs;
+typedef QMap<QString, QPair<QStringList, QString>> FuncDefs;
 
 #endif // QMLSCOPE_H

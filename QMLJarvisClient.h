@@ -2,6 +2,8 @@
 #define QMLJARVISCLIENT_H
 
 #include "JarvisClient.h"
+#include "QMLModulePackage.h"
+#include "QMLScope.h"
 
 class QMLJarvisClient : public JarvisClient
 {
@@ -12,13 +14,13 @@ public:
 
 private slots:
     void receivedInitInfo(const QStringList &scopes, const QList<ModulePackage> &pkgs);
-    void pkgLoaded(const ModulePackage &pkg) { emit pkgLoadedQML(QVariant::fromValue(pkg)); }
-    void enteredScope(const QString &name, const Scope &info) { emit enteredScopeQML(name, QVariant::fromValue(info)); }
+    void pkgLoaded(const ModulePackage &pkg) { emit pkgLoadedQML(new QMLModulePackage(pkg)); }
+    void enteredScope(const QString &name, const Scope &info) { emit enteredScopeQML(name, new QMLScope(info)); }
 
 signals:
-    void pkgLoadedQML(const QVariant &pkg);
-    void enteredScopeQML(const QString &name, const QVariant &info);
-    void receivedInitInfo(const QVariant &scopes, const QVariant &pkgs);
+    void pkgLoadedQML(QObject *pkg);
+    void enteredScopeQML(const QString &name, QObject *info);
+    void receivedInitInfoQML(const QStringList &scopes, const QList<QObject*> &pkgs);
 };
 
 #endif // QMLJARVISCLIENT_H

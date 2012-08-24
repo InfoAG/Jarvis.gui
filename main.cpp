@@ -9,6 +9,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QScopedPointer<QApplication> app(createApplication(argc, argv));
 
     qmlRegisterType<QMLJarvisClient>("QMLJarvisClient",0,1,"QMLJarvisClient");
+    qmlRegisterType<QMLScope>();
 
     QmlApplicationViewer viewer;
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
