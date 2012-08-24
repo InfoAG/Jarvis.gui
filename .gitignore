@@ -19,5 +19,6 @@ Makefile*
 debug/
 release/
 GUI
+!GUI/
 moc_qmlapplicationviewer.cpp
 qrc_ressources.cpp

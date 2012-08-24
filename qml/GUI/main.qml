@@ -44,13 +44,17 @@ Rectangle {
         anchors.bottom: input.top
         anchors.top: parent.top
         anchors.left: parent.left
-        color: "white"
+        color: "grey"
+        border.width: 2
+        border.color: "mediumseagreen"
 
         ListItem
         {
             id: listitem
-            width: generalRec.width/6
-            height:scoperec.height
+            //width: generalRec.width/6
+            //height:scoperec.height
+            anchors.margins: 5
+            anchors.fill: parent
             hideBar: false
         }
 
@@ -75,6 +79,16 @@ Rectangle {
 
 
 
+
+    ScopeStack
+    {
+        anchors.margins: 5
+        anchors.right: parent.right
+        anchors.left: scoperec.right
+        anchors.top: parent.top
+        anchors.bottom: input.top
+        userwidth: generalRec.width/6
+    }
 
 
 
@@ -164,7 +178,8 @@ Rectangle {
         id: quit
         source: "../../images/quit.png"
         visible: false
-
+        width: 30
+        height: 30
         x:generalRec.width+500; y:generalRec.height+500
         MouseArea
         {

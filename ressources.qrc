@@ -16,5 +16,6 @@
         <file>images/titlebar.sci</file>
         <file>images/toolbutton.png</file>
         <file>images/toolbutton.sci</file>
+        <file>qml/GUI/ScopeStack.qml</file>
     </qresource>
 </RCC>
