@@ -4,9 +4,12 @@ import QtQuick 1.1
 Item
 {
     anchors.fill: parent
-    property alias model: scopeModel
-    property alias number: listview.count
     property alias hideBar: scrollbar.hideScrollBarsWhenStopped
+    property alias number: listview.count
+    property alias currentIndex: listview.currentIndex
+    property alias currentItem: listview.currentItem
+    property alias model: scopeModel
+    id: parentitem
 
     ListModel
     {
@@ -64,8 +67,7 @@ Item
     Component {
               id: highrec
               Rectangle {
-                  anchors.left: parent.left
-                  anchors.right: parent.right
+                  width: listview.width-9
                   height:15
                   radius: 5
                   color: "mediumseagreen"
@@ -74,6 +76,35 @@ Item
                   Behavior on y { PropertyAnimation {} }
               }
           }
+
+
+    function append(name)
+    {
+        var elements = listview.count
+
+        if(elements == 0)
+            scopeModel.append({"name":name});
+        else
+        {
+            for(var i = 0; i < elements; i++)
+            {
+
+
+                if(scopeModel.get(i).name > name)
+                {
+                    scopeModel.insert(i,{"name":name});
+                    break;
+
+                }
+
+                if(i === elements-1)
+                {
+                    scopeModel.append({"name":name});
+                }
+
+            }
+        }
+    }
 
 
 }

@@ -14,8 +14,10 @@ Rectangle {
         onReceivedInitInfo: generalRec.state = "connected";
         onEnteredScope:
         {
-            scoperec.addItem(name);
-            userrec.fill(info)
+            listitem.append(name);
+
+            var scopename = name;
+            //var object =
         }
         onError:
         {
@@ -69,42 +71,6 @@ Rectangle {
                 text = "new Scope"
             }
         }
-
-
-
-
-        function addItem(scopename)
-        {
-            console.log("addItem");
-            console.log(scopename);
-
-            var elements = listitem.number
-
-            if(elements == 0)
-                listitem.model.append({"name":scopename});
-            else
-            {
-                for(var i = 0; i < elements; i++)
-                {
-                    console.log(scopename)
-                    console.log(listitem.model.get(i).name)
-
-
-                    if(listitem.model.get(i).name > scopename)
-                    {
-                        listitem.model.insert(i,{"name":scopename});
-                        break;
-
-                    }
-
-                    if(i === elements-1)
-                    {
-                        listitem.model.append({"name":scopename});
-                    }
-
-                }
-            }
-        }
     }
 
 
@@ -113,58 +79,60 @@ Rectangle {
 
 
 
-    Rectangle
+
+
+
+
+//    Rectangle
+//    {
+//        id: userrec
+//        width: generalRec.width/6
+//        visible: false
+//        anchors.margins: 5
+//        anchors.bottom: sendbutton.top
+//        anchors.top: parent.top
+//        anchors.right: parent.right
+//        color: "white"
+
+
+//        ListItem
+//        {
+//            id: listitem2
+//            width: generalRec.width/6
+//        }
+
+//        function fill(info)
+//        {
+
+//        }
+
+//    }
+
+
+
+
+
+
+    Input
     {
-        id: userrec
-        width: generalRec.width/6
+        id: input
+        focus: true
+        x:generalRec.width+500
+        y:generalRec.height+500
         visible: false
-        anchors.margins: 5
-        anchors.bottom: sendbutton.top
-        anchors.top: parent.top
-        anchors.right: parent.right
-        color: "white"
-
-
-        ListItem
+        item.horizontalAlignment: Qt.AlignLeft
+        anchors.bottomMargin: 5; anchors.leftMargin: 5; anchors.rightMargin: 5
+        onAccepted:
         {
-            id: listitem2
-            width: generalRec.width/6
-        }
+            sendbutton.state = "Pressed";
+            sendbutton.state="";
 
-        function fill(info)
-        {
-
+            var scope = listitem.model.get(listitem.currentIndex).name;
+            client.msgToScope(scope,text);
+            input.text = "";
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    Input{
-            id: input
-           //onAccepted:searchbutton.doSearch();
-           focus: true
-           x:generalRec.width+500
-           y:generalRec.height+500
-           visible: false
-           item.horizontalAlignment: Qt.AlignLeft
-           anchors.bottomMargin: 5; anchors.leftMargin: 5; anchors.rightMargin: 5
-           onAccepted: {sendbutton.state = "Pressed"; sendbutton.state="";}
-
-        }
 
     Button {
         id: sendbutton
@@ -361,8 +329,6 @@ Rectangle {
             PropertyChanges{ target: sendbutton; visible: true}
             PropertyChanges { target: quit; visible: true}
             PropertyChanges { target: scoperec; visible: true}
-            PropertyChanges { target: userrec; visible: true}
-
         },
 
         State {
