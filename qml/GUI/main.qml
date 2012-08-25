@@ -15,15 +15,17 @@ Rectangle {
         onReceivedInitInfo: generalRec.state = "connected";
         onEnteredScope:
         {
+            //create objects of ScopeStack, append items to ListItem
             listitem.append(name);
 
             var scopename = name;
             var component = Qt.createComponent("ScopeStack.qml");
+            var stack
 
 
             if(listitem.number == 1)
             {
-                var stack = component.createObject(generalRec, {"name":scopename, "anchors.margins": 5, "anchors.right": generalRec.right, "anchors.left": scoperec.right, "anchors.top": generalRec.top, "anchors.bottom": input.top, "userwidth": generalRec.width/6, "visible": true});
+                stack = component.createObject(generalRec, {"name":scopename, "anchors.margins": 5, "anchors.right": generalRec.right, "anchors.left": scoperec.right, "anchors.top": generalRec.top, "anchors.bottom": input.top, "userwidth": generalRec.width/6, "visible": true});
                 StackMap.map[scopename] = stack;
                 StackMap.lastFocusedObject = stack;
 
@@ -31,7 +33,7 @@ Rectangle {
 
             else
             {
-                var stack = component.createObject(generalRec, {"name":scopename, "anchors.margins": 5, "anchors.right": generalRec.right, "anchors.left": scoperec.right, "anchors.top": generalRec.top, "anchors.bottom": input.top, "userwidth": generalRec.width/6, "visible": false});
+                stack = component.createObject(generalRec, {"name":scopename, "anchors.margins": 5, "anchors.right": generalRec.right, "anchors.left": scoperec.right, "anchors.top": generalRec.top, "anchors.bottom": input.top, "userwidth": generalRec.width/6, "visible": false});
                 StackMap.map[scopename] = stack;
             }
 
@@ -42,6 +44,14 @@ Rectangle {
             }
 
 
+            //pass scopeinfos to new object using writeInfo()
+
+
+
+
+
+
+
 
         }
 
@@ -49,7 +59,7 @@ Rectangle {
         {
             var scopename = scope;
             var component = StackMap.map[scopename];
-            component.write(scope,sender,msg);
+            component.writeMsg(scope,sender,msg);
 
         }
 
@@ -78,7 +88,7 @@ Rectangle {
         anchors.bottom: input.top
         anchors.top: parent.top
         anchors.left: parent.left
-        color: "grey"
+        color: "white"
         border.width: 2
         border.color: "mediumseagreen"
 
@@ -99,13 +109,16 @@ Rectangle {
             }
         }
 
+//        Rectangle
+//        {}
+
         TextInput
         {
             id: nstext
-            y: listitem.number*15
+            y: 5+listitem.number*15
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.margins: 5
+            anchors.margins: 10
             height:15
             text: "new Scope"
 
@@ -171,6 +184,7 @@ Rectangle {
     Image
     {
         id: quit
+        z:5
         source: "../../images/quit.png"
         visible: false
         width: 30

@@ -14,6 +14,7 @@ LIBS += -L../Frontend/debug/ -lJarvis-Frontend
 INCLUDEPATH += ../Frontend/
 
 
+
 QT += network \
     gui \
     core

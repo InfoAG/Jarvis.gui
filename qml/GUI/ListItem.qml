@@ -31,6 +31,7 @@ Item
 
             Text
             {
+                anchors.fill: parent
                 id: content
                 text: name;
             }
@@ -38,11 +39,13 @@ Item
             MouseArea
             {
                 anchors.fill: parent
+                acceptedButtons: Qt.LeftButton
 
                 onClicked:
                 {
-                    listview.currentIndex = index;
-                    parentitem.focusChanged(name);
+                        console.log("leftbutton");
+                        listview.currentIndex = index;
+                        parentitem.focusChanged(name);
                 }
             }
         }
@@ -60,8 +63,10 @@ Item
     }
 
 
+
     ScrollBar
     {
+        z:5
         id: scrollbar
         flickable: listview
         vertical: true
@@ -87,7 +92,9 @@ Item
         var elements = listview.count
 
         if(elements == 0)
+        {
             scopeModel.append({"name":name});
+        }
         else
         {
             for(var i = 0; i < elements; i++)

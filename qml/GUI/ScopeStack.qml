@@ -5,7 +5,6 @@ Rectangle {
 
     property alias userwidth: userlist.width;
     property string name;
-    property alias outputtxt: outputtext
 
     width: 550
     height: 380
@@ -59,6 +58,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         anchors.margins: 5
+
     }
 
 
@@ -68,9 +68,14 @@ Rectangle {
 
 
 
-    function write(scope,sender,msg)
+    function writeMsg(scope,sender,msg)
     {
         outputtext.text += sender + ": " + msg + "\n";
+    }
+
+    function writeInfo(clients,variables,functions)
+    {
+        console.log("writeInfo called");
     }
 
 
