@@ -10,6 +10,9 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     qmlRegisterType<QMLJarvisClient>("QMLJarvisClient",0,1,"QMLJarvisClient");
     qmlRegisterType<QMLScope>();
+    qmlRegisterType<QMLOperatorModule>();
+    qmlRegisterType<QMLFunctionModule>();
+    qmlRegisterType<QMLFunctionDefinition>();
 
     QmlApplicationViewer viewer;
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
