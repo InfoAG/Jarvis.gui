@@ -8,7 +8,7 @@ Rectangle {
     property bool vertical: true
 
     // If set to false, scrollbar is visible even when not scrolling
-    property bool hideScrollBarsWhenStopped: true
+    property bool hideScrollBarsWhenStopped: false
 
     // Thickness of the scrollbar, in pixels
     property int scrollbarWidth: 7

@@ -6,8 +6,6 @@ Rectangle {
     property alias userwidth: userlist.width;
     property string name;
 
-    width: 550
-    height: 380
     id: container
     color: "transparent"
     border.width: 2
@@ -55,12 +53,73 @@ Rectangle {
     {
         id: userlist
         anchors.top: parent.top
-        anchors.bottom: parent.bottom
+        height:parent.height/4
         anchors.right: parent.right
         anchors.margins: 5
 
+
+        UserListItem
+        {
+            id: users
+            anchors.margins: 5
+            anchors.fill: parent
+        }
+
     }
 
+
+    Rectangle
+    {
+        id:variables
+        anchors.top: userlist.bottom
+        height:parent.height/4-10
+        anchors.right: parent.right
+        anchors.margins: 5
+
+        UserListItem
+        {
+            id: vars
+            anchors.margins: 5
+            anchors.fill: parent
+
+        }
+    }
+
+
+    Rectangle
+    {
+        id:functions
+        anchors.top: variables.bottom
+        height:parent.height/4-10
+        anchors.right: parent.right
+        anchors.margins: 5
+
+        UserListItem
+        {
+            id:func
+            anchors.margins: 5
+            anchors.fill: parent
+
+        }
+
+    }
+
+    Rectangle
+    {
+        id:modules
+        anchors.top: functions.bottom
+        height: parent.height/4-10
+        anchors.right: parent.right
+        anchors.margins: 5
+
+        ListItem
+        {
+            id:mods
+            anchors.margins: 5
+            anchors.fill: parent
+
+        }
+    }
 
 
 
@@ -73,9 +132,28 @@ Rectangle {
         outputtext.text += sender + ": " + msg + "\n";
     }
 
-    function writeInfo(clients,variables,functions)
+    function writeInfo(info)
     {
-        console.log("writeInfo called");
+        //1. user
+        for(var i = 0; i < info.clients.length;i++)
+        {
+            users.append(info.clients[i]);
+        }
+
+        //2.variables
+        for(var i = 0; i < info.variables.length;i++)
+        {
+            vars.append(info.variables[i]);
+        }
+
+        //3.funcions
+//        for(var i = 0; i < info.variables.length;i++)
+//        {
+//            vars.append(info.variables[i]);
+//        }
+
+
+        //4.modules
     }
 
 

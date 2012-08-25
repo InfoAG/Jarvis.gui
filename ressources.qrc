@@ -18,5 +18,7 @@
         <file>images/toolbutton.sci</file>
         <file>qml/GUI/ScopeStack.qml</file>
         <file>map.js</file>
+        <file>images/close.png</file>
+        <file>qml/GUI/UserListItem.qml</file>
     </qresource>
 </RCC>

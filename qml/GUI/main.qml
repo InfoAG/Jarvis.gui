@@ -48,10 +48,7 @@ Rectangle {
 
 
             //pass scopeinfos to new object using writeInfo()
-
-
-
-
+            stack.writeInfo(info);
 
 
 
@@ -100,7 +97,6 @@ Rectangle {
             id: listitem
             anchors.margins: 5
             anchors.fill: parent
-            hideBar: false
             onFocusChanged:
             {
                 var scopename = name;
@@ -111,9 +107,6 @@ Rectangle {
 
             }
         }
-
-//        Rectangle
-//        {}
 
         TextInput
         {

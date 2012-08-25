@@ -32,46 +32,15 @@ Item
 
             Text
             {
-                z:10
                 anchors.fill: parent
                 id: content
                 text: name;
-            }
-
-            Rectangle
-            {
-                z:9
-                id:herpderp
-                width: listview.width-9
-                height:15
-                x:-3
-                radius: 5
-                color: "#9BED00"
-                opacity:0
-                Behavior on opacity{ PropertyAnimation{duration: 500}}
             }
 
             MouseArea
             {
                 anchors.fill: parent
                 acceptedButtons: Qt.LeftButton
-                hoverEnabled: true
-
-                onClicked:
-                {
-                        listview.currentIndex = index;
-                        parentitem.focusChanged(name);
-                }
-
-                onEntered:
-                {
-                    herpderp.opacity = 1;
-                }
-
-                onExited:
-                {
-                    herpderp.opacity = 0;
-                }
             }
         }
     }
@@ -82,8 +51,6 @@ Item
         anchors.fill: parent
         model: scopeModel
         delegate: scopeDelegate
-        highlight: highrec
-        highlightFollowsCurrentItem: false
         focus: true
     }
 
@@ -101,7 +68,6 @@ Item
     Component {
               id: highrec
               Rectangle {
-                  id:iamarec
                   width: listview.width-9
                   height:15
                   radius: 5
