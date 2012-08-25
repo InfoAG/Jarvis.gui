@@ -14,7 +14,16 @@ Rectangle {
         id: client
         onReceivedInitInfoQML: {
             generalRec.state = "connected"
-            console.log(pkgs[0].operators[0].name);
+
+            for(var i in pkgs)
+            {
+                StackMap.packagelist.push(i);
+                console.log(pkgs[i]);
+            }
+
+
+            //StackMap.packagelist = pkgs.join("\n") //pkgs[0].operators[0].name);
+
         }
         onEnteredScopeQML:
         {
@@ -48,11 +57,23 @@ Rectangle {
 
 
             //pass scopeinfos to new object using writeInfo()
-            stack.writeInfo(info);
+            stack.writeInfo(info,StackMap.packagelist);
 
+        }
 
+        onNewClient:
+        {
+            var scopename = scope;
+            var component = StackMap.map[scopename];
+            component.addUser(nick)
 
+        }
 
+        onClientLeft:
+        {
+            var scopename = scope;
+            var component = StackMap.map[scopename];
+            component.removeUser(nick)
         }
 
         onMsgInScope:
@@ -67,6 +88,8 @@ Rectangle {
         {
             console.log("error");
         }
+
+
 
     }
 

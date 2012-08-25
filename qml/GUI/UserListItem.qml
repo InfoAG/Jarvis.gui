@@ -109,5 +109,18 @@ Item
         }
     }
 
+    function remove(name)
+    {
+        var elements = listview.count
+
+        for(var i = 0; i < elements; i++)
+        {
+            if(scopeModel.get(i).name == name)
+                scopeModel.remove(i);
+
+
+        }
+    }
+
 
 }

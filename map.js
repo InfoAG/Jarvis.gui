@@ -2,3 +2,4 @@
 
 var map = {};
 var lastFocusedObject;
+var packagelist = [];

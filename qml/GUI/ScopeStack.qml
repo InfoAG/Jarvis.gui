@@ -58,6 +58,7 @@ Rectangle {
         anchors.margins: 5
 
 
+
         UserListItem
         {
             id: users
@@ -74,6 +75,7 @@ Rectangle {
         anchors.top: userlist.bottom
         height:parent.height/4-10
         anchors.right: parent.right
+        anchors.left: output.right
         anchors.margins: 5
 
         UserListItem
@@ -92,6 +94,7 @@ Rectangle {
         anchors.top: variables.bottom
         height:parent.height/4-10
         anchors.right: parent.right
+        anchors.left: output.right
         anchors.margins: 5
 
         UserListItem
@@ -110,9 +113,10 @@ Rectangle {
         anchors.top: functions.bottom
         height: parent.height/4-10
         anchors.right: parent.right
+        anchors.left: output.right
         anchors.margins: 5
 
-        ListItem
+        UserListItem
         {
             id:mods
             anchors.margins: 5
@@ -132,28 +136,49 @@ Rectangle {
         outputtext.text += sender + ": " + msg + "\n";
     }
 
-    function writeInfo(info)
+    function writeInfo(info,pkgs)
     {
         //1. user
-        for(var i = 0; i < info.clients.length;i++)
+        for(var i in info.clients)
         {
             users.append(info.clients[i]);
         }
 
         //2.variables
-        for(var i = 0; i < info.variables.length;i++)
+        for (var key in info.variables)
         {
-            vars.append(info.variables[i]);
+
+            vars.append(key + "=" +  info.variables[key])
         }
 
         //3.funcions
-//        for(var i = 0; i < info.variables.length;i++)
+//        for(var object in info.functions)
 //        {
-//            vars.append(info.variables[i]);
+//            var string = object.identifier + "(";
+//            for(var i; i < object.arguments.length; i++)
+//            {
+//                string +=object.arguments[i];
+//                if(i == object.arguments.length-1)
+//                    string +=","
+//            }
+//            string += ")=" + object.definition;
 //        }
 
+        //4. modules
+        for(var j in pkgs)
+        {
+            mods.append(j);
+        }
+    }
 
-        //4.modules
+    function addUser(user)
+    {
+        users.append(user)
+    }
+
+    function removeUser(user)
+    {
+        users.remove(user)
     }
 
 
