@@ -18,6 +18,8 @@ Makefile*
 *.svg
 debug/
 release/
+*.autosave
+object_script.*
 GUI
 !GUI/
 moc_qmlapplicationviewer.cpp

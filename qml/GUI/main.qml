@@ -1,5 +1,5 @@
 import QtQuick 1.1
-import JarvisClient 0.1
+import QMLJarvisClient 0.1
 import "../../map.js" as StackMap
 
 Rectangle {
@@ -9,11 +9,14 @@ Rectangle {
     radius: 0
 
     //Object of JarvisClient
-    JarvisClient
+    QMLJarvisClient
     {
         id: client
-        onReceivedInitInfo: generalRec.state = "connected";
-        onEnteredScope:
+        onReceivedInitInfoQML: {
+            generalRec.state = "connected"
+            console.log(pkgs[0].operators[0].name);
+        }
+        onEnteredScopeQML:
         {
             //create objects of ScopeStack, append items to ListItem
             listitem.append(name);
