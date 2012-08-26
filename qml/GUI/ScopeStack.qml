@@ -53,7 +53,7 @@ Rectangle {
     {
         id: userlist
         anchors.top: parent.top
-        height:parent.height/4
+        height:parent.height/3
         anchors.right: parent.right
         anchors.margins: 5
 
@@ -73,7 +73,7 @@ Rectangle {
     {
         id:variables
         anchors.top: userlist.bottom
-        height:parent.height/4-10
+        height:parent.height/3-10
         anchors.right: parent.right
         anchors.left: output.right
         anchors.margins: 5
@@ -92,7 +92,7 @@ Rectangle {
     {
         id:functions
         anchors.top: variables.bottom
-        height:parent.height/4-10
+        height:parent.height/3-10
         anchors.right: parent.right
         anchors.left: output.right
         anchors.margins: 5
@@ -107,27 +107,6 @@ Rectangle {
 
     }
 
-    Rectangle
-    {
-        id:modules
-        anchors.top: functions.bottom
-        height: parent.height/4-10
-        anchors.right: parent.right
-        anchors.left: output.right
-        anchors.margins: 5
-
-        UserListItem
-        {
-            id:mods
-            anchors.margins: 5
-            anchors.fill: parent
-
-        }
-    }
-
-
-
-
 
 
 
@@ -136,7 +115,7 @@ Rectangle {
         outputtext.text += sender + ": " + msg + "\n";
     }
 
-    function writeInfo(info,pkgs)
+    function writeInfo(info)
     {
         //1. user
         for(var i in info.clients)
@@ -152,33 +131,55 @@ Rectangle {
         }
 
         //3.funcions
-//        for(var object in info.functions)
-//        {
-//            var string = object.identifier + "(";
-//            for(var i; i < object.arguments.length; i++)
-//            {
-//                string +=object.arguments[i];
-//                if(i == object.arguments.length-1)
-//                    string +=","
-//            }
-//            string += ")=" + object.definition;
-//        }
-
-        //4. modules
-        for(var j in pkgs)
+        for(var i = 0; i < info.functions.length; i++)
         {
-            mods.append(j);
+            var string = info.functions[i].identifier + "(";
+
+            for(var j = 0; j < info.functions[i].arguments.length; j++)
+            {
+                string += info.functions[i].arguments[j];
+                if(j != info.functions[i].arguments.length-1)
+                    string += ",";
+            }
+
+            string += ")=" + info.functions[i].definition;
+            func.append(string);
+
         }
+
     }
 
     function addUser(user)
     {
-        users.append(user)
+        users.append(user);
     }
 
     function removeUser(user)
     {
-        users.remove(user)
+        users.remove(user);
+    }
+
+    function addVariable(id,def)
+    {
+        vars.append(id + "=" + def);
+    }
+
+
+    function addFunction(id,args,def)
+    {
+        console.log(args[0]);
+        var string = id + "(";
+
+        for(var i = 0; i < args.length; i++)
+        {
+            string += args[i];
+            if(i != args.length-1)
+                string += ",";
+        }
+
+        string += ")=" + def;
+        func.append(string);
+
     }
 
 

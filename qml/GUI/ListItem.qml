@@ -10,7 +10,7 @@ Item
     property alias currentItem: listview.currentItem
     property alias model: scopeModel
     signal focusChanged(string name)
-    signal itemDeleted(string item)
+    signal itemDeleted(string name)
 
     id: parentitem
 
@@ -41,7 +41,7 @@ Item
             Rectangle
             {
                 z:9
-                id:herpderp
+                id:hoverrec
                 width: listview.width-9
                 height:15
                 x:-3
@@ -49,6 +49,38 @@ Item
                 color: "#9BED00"
                 opacity:0
                 Behavior on opacity{ PropertyAnimation{duration: 500}}
+
+                Image
+                {
+                    source: "../../images/close.png";
+                    z:10
+                    anchors.right: parent.right
+                    height: hoverrec.height
+                    width: hoverrec.height
+
+                    Rectangle
+                    {
+                        z:11
+                        id:imagerec
+                        anchors.fill: parent
+                        color: "black"
+                        opacity:0
+                    }
+
+                    MouseArea
+                    {
+                        anchors.fill: parent
+
+                        onClicked:
+                        {
+                            imagerec.opacity = 0.5;
+                            parentitem.itemDeleted(content.text);
+                            scopeModel.remove(index);
+                        }
+
+                    }
+
+                }
             }
 
             MouseArea
@@ -65,12 +97,12 @@ Item
 
                 onEntered:
                 {
-                    herpderp.opacity = 1;
+                    hoverrec.opacity = 1;
                 }
 
                 onExited:
                 {
-                    herpderp.opacity = 0;
+                    hoverrec.opacity = 0;
                 }
             }
         }
@@ -106,8 +138,8 @@ Item
                   height:15
                   radius: 5
                   color: "mediumseagreen"
-                  y: listview.currentItem.y;
-                  x: listview.currentItem.x-3;
+                  y: y = listview.currentItem.y;
+                  x: x = listview.currentItem.x-3;
                   Behavior on y { PropertyAnimation {} }
               }
           }

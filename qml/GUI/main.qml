@@ -15,14 +15,7 @@ Rectangle {
         onReceivedInitInfoQML: {
             generalRec.state = "connected"
 
-            for(var i in pkgs)
-            {
-                StackMap.packagelist.push(i);
-                console.log(pkgs[i]);
-            }
 
-
-            //StackMap.packagelist = pkgs.join("\n") //pkgs[0].operators[0].name);
 
         }
         onEnteredScopeQML:
@@ -56,8 +49,7 @@ Rectangle {
             }
 
 
-            //pass scopeinfos to new object using writeInfo()
-            stack.writeInfo(info,StackMap.packagelist);
+            stack.writeInfo(info);
 
         }
 
@@ -82,6 +74,22 @@ Rectangle {
             var component = StackMap.map[scopename];
             component.writeMsg(scope,sender,msg);
 
+        }
+
+
+        onNewFunction:
+        {
+            var scopename = scope;
+            var component = StackMap.map[scopename];
+            component.addFunction(identifier,arguments,def)
+
+        }
+
+        onNewVariable:
+        {
+            var scopename = scope;
+            var component = StackMap.map[scopename];
+            component.addVariable(identifier,definition)
         }
 
         onError:
@@ -128,6 +136,13 @@ Rectangle {
                 component.visible = true;
                 StackMap.lastFocusedObject = component;
 
+            }
+
+            onItemDeleted:
+            {
+                var scopename = name;
+                var component = StackMap.map[scopename];
+                component.destroy();
             }
         }
 
