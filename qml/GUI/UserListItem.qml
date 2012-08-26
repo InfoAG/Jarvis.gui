@@ -122,5 +122,10 @@ Item
         }
     }
 
+    function removeWithIndex(index)
+    {
+        scopeModel.remove(index);
+    }
+
 
 }

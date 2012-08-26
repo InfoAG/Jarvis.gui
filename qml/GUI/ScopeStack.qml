@@ -163,9 +163,17 @@ Rectangle {
     {
         for(var i = 0; i < vars.number; i++)
         {
-            var tempstring = vars.model.get(i).name;
-            if(id == tempstring.substring(0,tempstring.indexOf("=")))
-                vars.remove(tempstring)
+            console.log(vars.model.get(i).name);
+
+            var tempstring = vars.model.get(i).name
+            tempstring = tempstring.substring(0,tempstring.indexOf("="));
+            console.log(id + " herp " + tempstring)
+            if(id == tempstring)
+            {
+                vars.removeWithIndex(i);
+
+            }
+
         }
         vars.append(id + "=" + def);
     }

@@ -30,7 +30,7 @@ Rectangle {
 
             if(listitem.number == 1)
             {
-                stack = component.createObject(generalRec, {"name":scopename, "anchors.margins": 5, "anchors.right": generalRec.right, "anchors.left": scoperec.right, "anchors.top": generalRec.top, "anchors.bottom": input.top, "userwidth": generalRec.width/6, "visible": true});
+                stack = component.createObject(dynamicRec, {"name":scopename, "anchors.fill": dynamicRec, "userwidth": generalRec.width/6, "visible": true});
                 StackMap.map[scopename] = stack;
                 StackMap.lastFocusedObject = stack;
 
@@ -38,7 +38,7 @@ Rectangle {
 
             else
             {
-                stack = component.createObject(generalRec, {"name":scopename, "anchors.margins": 5, "anchors.right": generalRec.right, "anchors.left": scoperec.right, "anchors.top": generalRec.top, "anchors.bottom": input.top, "userwidth": generalRec.width/6, "visible": false});
+                stack = component.createObject(dynamicRec, {"name":scopename, "anchors.fill": dynamicRec, "userwidth": generalRec.width/6, "visible": false});
                 StackMap.map[scopename] = stack;
             }
 
@@ -107,17 +107,15 @@ Rectangle {
 
     Rectangle
     {
-        id: herpiderp
+        id: dynamicRec
         anchors.margins: 5
         anchors.right: parent.right
         anchors.left: scoperec.right
         anchors.top: parent.top
         anchors.bottom: input.top
         color: "transparent"
-        border.width: 2
         visible: true
         z:1
-        //"userwidth": generalRec.width/6,
 
     }
 
@@ -247,7 +245,17 @@ Rectangle {
         MouseArea
         {
             anchors.fill: parent
-            onClicked: {generalRec.state = "connecting";client.disconnect();}
+            onClicked:
+            {
+
+                for(var i in StackMap.map)
+                {
+                    StackMap.map[i].destroy();
+                }
+                client.disconnect();
+                generalRec.state = "connecting";
+                generalRec.state = "";
+            }
         }
     }
 
@@ -263,7 +271,7 @@ Rectangle {
         Loading
         {
             id: loading
-            z:101
+            z:3
             visible: false
             anchors.right: login.left
             anchors.bottom: parent.bottom
