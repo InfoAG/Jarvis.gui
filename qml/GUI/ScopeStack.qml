@@ -161,13 +161,18 @@ Rectangle {
 
     function addVariable(id,def)
     {
+        for(var i = 0; i < vars.number; i++)
+        {
+            var tempstring = vars.model.get(i).name;
+            if(id == tempstring.substring(0,tempstring.indexOf("=")))
+                vars.remove(tempstring)
+        }
         vars.append(id + "=" + def);
     }
 
 
     function addFunction(id,args,def)
     {
-        console.log(args[0]);
         var string = id + "(";
 
         for(var i = 0; i < args.length; i++)

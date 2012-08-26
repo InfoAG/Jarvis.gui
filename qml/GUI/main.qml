@@ -81,7 +81,10 @@ Rectangle {
         {
             var scopename = scope;
             var component = StackMap.map[scopename];
-            component.addFunction(identifier,arguments,def)
+            console.log(arguments.length);
+            component.addFunction(identifier,arguments,def);
+
+            //void newFunction(const QString &scope, const QString &identifier, const QStringList &arguments, const QString &def);
 
         }
 
@@ -98,6 +101,23 @@ Rectangle {
         }
 
 
+
+    }
+
+
+    Rectangle
+    {
+        id: herpiderp
+        anchors.margins: 5
+        anchors.right: parent.right
+        anchors.left: scoperec.right
+        anchors.top: parent.top
+        anchors.bottom: input.top
+        color: "transparent"
+        border.width: 2
+        visible: true
+        z:1
+        //"userwidth": generalRec.width/6,
 
     }
 
@@ -227,7 +247,7 @@ Rectangle {
         MouseArea
         {
             anchors.fill: parent
-            onClicked: {generalRec.state = "connecting";generalRec.state = "";client.disconnect();}
+            onClicked: {generalRec.state = "connecting";client.disconnect();}
         }
     }
 
@@ -238,6 +258,7 @@ Rectangle {
         height: 190
         anchors.centerIn: parent
         id: loginwindow
+        z:2
 
         Loading
         {
@@ -390,7 +411,6 @@ Rectangle {
         },
 
         State {
-
             name: "connecting";
             PropertyChanges{ target: staterec; opacity: 0.500; z:3}
             PropertyChanges{ target: loading; visible: true;}
@@ -398,6 +418,13 @@ Rectangle {
             PropertyChanges{target: port.item; readOnly: true}
             PropertyChanges{target: nick.item; readOnly: true}
             PropertyChanges{target: pwd.item; readOnly: true}
+        },
+
+        State{
+            name: "disconnected";
+            PropertyChanges{}
+
+
         }
 
     ]
