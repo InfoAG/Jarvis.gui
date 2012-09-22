@@ -138,8 +138,8 @@ Item
                   height:15
                   radius: 5
                   color: "mediumseagreen"
-                  y: y = listview.currentItem.y;
-                  x: x = listview.currentItem.x-3;
+                  y: listview.currentItem.y;
+                  x: listview.currentItem.x-3;
                   Behavior on y { PropertyAnimation {} }
               }
           }

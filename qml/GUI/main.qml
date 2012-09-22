@@ -8,14 +8,134 @@ Rectangle {
     height: 400
     radius: 0
 
+    Rectangle
+    {
+        id: header
+        height: 30
+        anchors.left:  parent.left
+        anchors.right: parent.right
+        anchors.margins: 5
+        color: "transparent"
+        z:4
+
+        MouseArea
+        {
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            anchors.right: quit.left
+            width:30
+            z:5
+
+            Rectangle
+            {
+                z:4
+                anchors.fill: parent
+                color:"grey"
+
+            }
+
+            onClicked:
+            {
+                console.log("current state is:" + generalRec.state)
+                generalRec.state = "showInformation"
+                console.log("current state is:" + generalRec.state)
+            }
+        }
+
+
+        Image
+        {
+            id: quit
+            z:5
+            source: "../../images/quit.png"
+            visible: false
+            width: 30
+            height: 30
+            x:generalRec.width+500; y:generalRec.height+500
+            MouseArea
+            {
+                anchors.fill: parent
+                onClicked:
+                {
+
+                    for(var i in StackMap.map)
+                    {
+                        StackMap.map[i].destroy();
+                    }
+                    client.disconnect();
+                    generalRec.state = "connecting";
+                    generalRec.state = "";
+                }
+            }
+        }
+
+    }
+
+
+
+    Rectangle
+    {
+        id: information
+        color: "transparent"
+        opacity: 0
+        border.width: 2
+        border.color: "mediumseagreen"
+        width: 400
+        height: 300
+        x: parent.width/2-information.width/2+500
+        y: parent.height/2-information.height/2
+        z:10
+
+        Rectangle
+        {
+            id: informationbg
+            color: "#909090"
+            opacity: 0
+            anchors.fill: parent
+        }
+
+
+
+        Button
+        {
+            text: "close"
+            width: 100; height: 32
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            anchors.margins: 5
+            onClicked: generalRec.state = "connected"
+        }
+
+    }
+
     //Object of JarvisClient
     QMLJarvisClient
     {
         id: client
         onReceivedInitInfoQML: {
-            generalRec.state = "connected"
+            generalRec.state = "connected";
+            for(var i in pkgs)
+            {
+
+                for(var j = 0; j < pkgs[i].operators.length; j++)
+                {
+                    console.log(pkgs[i].operators[j].name);
+                    operators.append(pkgs[i].operators[j].name)
+                }
+
+//                for(var j = 0; j < pkgs[i].terminals.length; j++)
+//                {
+//                    console.log(pkgs[i].terminals[j].name);
+//                }
+
+                for(var j = 0; j < pkgs[i].functions.length; j++)
+                {
+                    console.log(pkgs[i].functions[j].name);
+                }
 
 
+            }
+            //terminals.append()
 
         }
         onEnteredScopeQML:
@@ -111,7 +231,7 @@ Rectangle {
         anchors.margins: 5
         anchors.right: parent.right
         anchors.left: scoperec.right
-        anchors.top: parent.top
+        anchors.top: header.bottom
         anchors.bottom: input.top
         color: "transparent"
         visible: true
@@ -135,7 +255,7 @@ Rectangle {
         visible: false
         anchors.margins: 5
         anchors.bottom: input.top
-        anchors.top: parent.top
+        anchors.top: header.bottom
         anchors.left: parent.left
         color: "white"
         border.width: 2
@@ -161,6 +281,7 @@ Rectangle {
                 var scopename = name;
                 var component = StackMap.map[scopename];
                 component.destroy();
+                client.leaveScope(name)
             }
         }
 
@@ -231,32 +352,6 @@ Rectangle {
         anchors.leftMargin: 0
         anchors.topMargin: 0
         opacity: 0.5
-    }
-
-    Image
-    {
-        id: quit
-        z:5
-        source: "../../images/quit.png"
-        visible: false
-        width: 30
-        height: 30
-        x:generalRec.width+500; y:generalRec.height+500
-        MouseArea
-        {
-            anchors.fill: parent
-            onClicked:
-            {
-
-                for(var i in StackMap.map)
-                {
-                    StackMap.map[i].destroy();
-                }
-                client.disconnect();
-                generalRec.state = "connecting";
-                generalRec.state = "";
-            }
-        }
     }
 
 
@@ -428,11 +523,26 @@ Rectangle {
             PropertyChanges{target: pwd.item; readOnly: true}
         },
 
-        State{
+        State {
             name: "disconnected";
             PropertyChanges{}
 
 
+        },
+
+        State {
+            name: "showInformation";
+            PropertyChanges{ target: information; opacity: 1; x: parent.width/2-information.width/2; y: parent.height/2-information.height/2}
+            PropertyChanges{ target: informationbg; opacity:0.5}
+            PropertyChanges { target: staterec; opacity:0}
+            PropertyChanges { target: loginwindow; opacity:0}
+            AnchorChanges { target: sendbutton; anchors.right: parent.right; anchors.bottom: parent.bottom;}
+            AnchorChanges { target: input; anchors.bottom: parent.bottom; anchors.left: parent.left; anchors.right: sendbutton.left;}
+            AnchorChanges { target: quit; anchors.top: parent.top; anchors.right: parent.right}
+            PropertyChanges { target: input; focus: true; visible: true}
+            PropertyChanges{ target: sendbutton; visible: true}
+            PropertyChanges { target: quit; visible: true}
+            PropertyChanges { target: scoperec; visible: true}
         }
 
     ]
@@ -456,6 +566,15 @@ Rectangle {
             {
                 NumberAnimation{properties:"visible";duration:100}
                 NumberAnimation{properties:"opacity";duration:600}
+
+            }
+        },
+
+        Transition {
+            from: "connected"; to: "showInformation"; reversible: true
+            ParallelAnimation
+            {
+                NumberAnimation{properties: "x,y,opacity"; duration: 300}
 
             }
         }
