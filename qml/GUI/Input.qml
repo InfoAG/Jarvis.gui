@@ -55,9 +55,9 @@ FocusScope {
             else if (event.key === Qt.Key_Return)
             {
                 container.accepted();
-                input.height = 32
-                flick.height = 32
                 container.height = 32
+                flick.height = 22
+                input.height = 9
                 event.accepted = true;
             }
 
