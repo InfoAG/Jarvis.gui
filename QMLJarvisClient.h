@@ -3,7 +3,7 @@
 
 #include "JarvisClient.h"
 #include "QMLModulePackage.h"
-#include "QMLScope.h"
+#include "QMLRoom.h"
 
 class QMLJarvisClient : public JarvisClient
 {
@@ -13,14 +13,14 @@ public:
     QMLJarvisClient();
 
 private slots:
-    void receivedInitInfo(const QStringList &scopes, const QList<ModulePackage> &pkgs);
+    void receivedInitInfo(const QStringList &rooms, const QList<ModulePackage> &pkgs);
     void pkgLoaded(const ModulePackage &pkg) { emit pkgLoadedQML(new QMLModulePackage(pkg)); }
-    void enteredScope(const QString &name, const Scope &info) { emit enteredScopeQML(name, new QMLScope(info)); }
+    void enteredRoom(const QString &name, const Room &info) { emit enteredRoomQML(name, new QMLRoom(info)); }
 
 signals:
     void pkgLoadedQML(QObject *pkg);
-    void enteredScopeQML(const QString &name, QObject *info);
-    void receivedInitInfoQML(const QStringList &scopes, const QList<QObject*> &pkgs);
+    void enteredRoomQML(const QString &name, QObject *info);
+    void receivedInitInfoQML(const QStringList &rooms, const QList<QObject*> &pkgs);
 };
 
 #endif // QMLJARVISCLIENT_H

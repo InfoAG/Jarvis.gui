@@ -120,7 +120,7 @@ Rectangle {
                 for(var j = 0; j < pkgs[i].operators.length; j++)
                 {
                     console.log(pkgs[i].operators[j].name);
-                    operators.append(pkgs[i].operators[j].name)
+                    //operators.append(pkgs[i].operators[j].name)
                 }
 
 //                for(var j = 0; j < pkgs[i].terminals.length; j++)
@@ -138,28 +138,28 @@ Rectangle {
             //terminals.append()
 
         }
-        onEnteredScopeQML:
+        onEnteredRoomQML:
         {
-            //create objects of ScopeStack, append items to ListItem
+            //create objects of RoomStack, append items to ListItem
             listitem.append(name);
 
-            var scopename = name;
-            var component = Qt.createComponent("ScopeStack.qml");
+            var roomname = name;
+            var component = Qt.createComponent("RoomStack.qml");
             var stack
 
 
             if(listitem.number == 1)
             {
-                stack = component.createObject(dynamicRec, {"name":scopename, "anchors.fill": dynamicRec, "userwidth": generalRec.width/6, "visible": true});
-                StackMap.map[scopename] = stack;
+                stack = component.createObject(dynamicRec, {"name":roomname, "anchors.fill": dynamicRec, "userwidth": generalRec.width/6, "visible": true});
+                StackMap.map[roomname] = stack;
                 StackMap.lastFocusedObject = stack;
 
             }
 
             else
             {
-                stack = component.createObject(dynamicRec, {"name":scopename, "anchors.fill": dynamicRec, "userwidth": generalRec.width/6, "visible": false});
-                StackMap.map[scopename] = stack;
+                stack = component.createObject(dynamicRec, {"name":roomname, "anchors.fill": dynamicRec, "userwidth": generalRec.width/6, "visible": false});
+                StackMap.map[roomname] = stack;
             }
 
 
@@ -175,43 +175,43 @@ Rectangle {
 
         onNewClient:
         {
-            var scopename = scope;
-            var component = StackMap.map[scopename];
+            var roomname = room;
+            var component = StackMap.map[roomname];
             component.addUser(nick)
 
         }
 
         onClientLeft:
         {
-            var scopename = scope;
-            var component = StackMap.map[scopename];
+            var roomname = room;
+            var component = StackMap.map[roomname];
             component.removeUser(nick)
         }
 
-        onMsgInScope:
+        onMsgInRoom:
         {
-            var scopename = scope;
-            var component = StackMap.map[scopename];
-            component.writeMsg(scope,sender,msg);
+            var roomname = room;
+            var component = StackMap.map[roomname];
+            component.writeMsg(room,sender,msg);
 
         }
 
 
         onNewFunction:
         {
-            var scopename = scope;
-            var component = StackMap.map[scopename];
+            var roomname = room;
+            var component = StackMap.map[roomname];
             console.log(arguments.length);
             component.addFunction(identifier,arguments,def);
 
-            //void newFunction(const QString &scope, const QString &identifier, const QStringList &arguments, const QString &def);
+            //void newFunction(const QString &room, const QString &identifier, const QStringList &arguments, const QString &def);
 
         }
 
         onNewVariable:
         {
-            var scopename = scope;
-            var component = StackMap.map[scopename];
+            var roomname = room;
+            var component = StackMap.map[roomname];
             component.addVariable(identifier,definition)
         }
 
@@ -230,7 +230,7 @@ Rectangle {
         id: dynamicRec
         anchors.margins: 5
         anchors.right: parent.right
-        anchors.left: scoperec.right
+        anchors.left: roomrec.right
         anchors.top: header.bottom
         anchors.bottom: input.top
         color: "transparent"
@@ -247,10 +247,10 @@ Rectangle {
             Image { source: "../../images/stripes.png"; fillMode: Image.Tile; anchors.fill: parent; opacity: 0.3 }
            }
 
-    //first Rectangle = Scopes, second = Userlist
+    //first Rectangle = rooms, second = Userlist
     Rectangle
     {
-        id: scoperec
+        id: roomrec
         width: generalRec.width/6
         visible: false
         anchors.margins: 5
@@ -268,8 +268,8 @@ Rectangle {
             anchors.fill: parent
             onFocusChanged:
             {
-                var scopename = name;
-                var component = StackMap.map[scopename];
+                var roomname = name;
+                var component = StackMap.map[roomname];
                 StackMap.lastFocusedObject.visible = false;
                 component.visible = true;
                 StackMap.lastFocusedObject = component;
@@ -278,10 +278,10 @@ Rectangle {
 
             onItemDeleted:
             {
-                var scopename = name;
-                var component = StackMap.map[scopename];
+                var roomname = name;
+                var component = StackMap.map[roomname];
                 component.destroy();
-                client.leaveScope(name)
+                client.leaveRoom(name)
             }
         }
 
@@ -293,13 +293,13 @@ Rectangle {
             anchors.right: parent.right
             anchors.margins: 10
             height:15
-            text: "new Scope"
+            text: "new room"
 
 
             onAccepted:
             {
-                client.enterScope(text)
-                text = "new Scope"
+                client.enterRoom(text)
+                text = "new room"
             }
         }
     }
@@ -322,9 +322,10 @@ Rectangle {
             sendbutton.state = "Pressed";
             sendbutton.state="";
 
-            var scope = StackMap.lastFocusedObject.name;
-            client.msgToScope(scope,text);
+            var room = StackMap.lastFocusedObject.name;
+            client.msgToRoom(room,text);
             input.text = "";
+            input.height = 32;
         }
 
     }
@@ -382,7 +383,7 @@ Rectangle {
             y: 5
             text: "Server:"
             verticalAlignment: Text.AlignVCenter
-            anchors.leftMargin: 0
+            anchors.leftMargin: 1
             font.pixelSize: 16; font.bold: true; color: "white"; style: Text.Raised; styleColor: "black"
             horizontalAlignment: Qt.AlignCenter
             anchors.left: parent.left
@@ -398,7 +399,7 @@ Rectangle {
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.topMargin: 5
-            text:"localhost";
+            text:"176.198.129.70";
             KeyNavigation.tab: port;
         }
 
@@ -476,7 +477,7 @@ Rectangle {
             anchors.right: parent.right
             anchors.top: nick.bottom
             anchors.topMargin: 5
-            text: "";
+            text: "Alex stinkt";
             item.readOnly: false
             KeyNavigation.tab: login
         }
@@ -510,7 +511,7 @@ Rectangle {
             PropertyChanges { target: input; focus: true; visible: true}
             PropertyChanges{ target: sendbutton; visible: true}
             PropertyChanges { target: quit; visible: true}
-            PropertyChanges { target: scoperec; visible: true}
+            PropertyChanges { target: roomrec; visible: true}
         },
 
         State {
@@ -542,7 +543,7 @@ Rectangle {
             PropertyChanges { target: input; focus: true; visible: true}
             PropertyChanges{ target: sendbutton; visible: true}
             PropertyChanges { target: quit; visible: true}
-            PropertyChanges { target: scoperec; visible: true}
+            PropertyChanges { target: roomrec; visible: true}
         }
 
     ]

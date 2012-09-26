@@ -44,7 +44,7 @@ symbian:TARGET.CAPABILITY += NetworkServices
 SOURCES += main.cpp \
     QMLJarvisClient.cpp \
     QMLModulePackage.cpp \
-    QMLScope.cpp
+    QMLRoom.cpp
 
 
 # Please do not modify the following two lines. Required for deployment.
@@ -66,12 +66,12 @@ OTHER_FILES += \
 
 HEADERS += \
     QMLJarvisClient.h \
-    QMLScope.h \
     QMLModulePackage.h \
     QMLModule.h \
     QMLOperatorModule.h \
     QMLFunctionModule.h \
-    QMLFunctionDefinition.h
+    QMLFunctionDefinition.h \
+    QMLRoom.h
 
 RESOURCES += \
     ressources.qrc

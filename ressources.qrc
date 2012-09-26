@@ -15,10 +15,10 @@
         <file>images/titlebar.sci</file>
         <file>images/toolbutton.png</file>
         <file>images/toolbutton.sci</file>
-        <file>qml/GUI/ScopeStack.qml</file>
         <file>map.js</file>
         <file>qml/GUI/UserListItem.qml</file>
         <file>images/close.png</file>
         <file>images/quit.png</file>
+        <file>qml/GUI/RoomStack.qml</file>
     </qresource>
 </RCC>

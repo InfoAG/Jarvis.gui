@@ -1,14 +1,14 @@
-#ifndef QMLSCOPE_H
-#define QMLSCOPE_H
+#ifndef QMLROOM_H
+#define QMLROOM_H
 
 #include <QDeclarativeListProperty>
 #include <QMap>
 #include <QString>
-#include "Scope.h"
+#include "Room.h"
 #include <QVariantMap>
 #include "QMLFunctionDefinition.h"
 
-class QMLScope : public QObject
+class QMLRoom : public QObject
 {   
     Q_OBJECT
     Q_PROPERTY(QStringList clients READ clients)
@@ -21,11 +21,11 @@ private:
     QList<QMLFunctionDefinition*> functions_;
 
 public:
-    QMLScope(const Scope &scope);
+    QMLRoom(const Room &room);
 
     QStringList clients() const { return clients_; }
     QVariantMap variables() const { return variables_; }
     QDeclarativeListProperty<QMLFunctionDefinition> functions() { return QDeclarativeListProperty<QMLFunctionDefinition>(this, functions_); }
 };
 
-#endif // QMLSCOPE_H
+#endif // QMLROOM_H
