@@ -295,6 +295,15 @@ Rectangle {
             height:15
             text: "new room"
 
+//            MouseArea
+//            {
+//                preventStealing: true
+//                anchors.fill: parent
+//                onClicked:
+//                {
+//                    nstext.selectAll();
+//                }
+//            }
 
             onAccepted:
             {

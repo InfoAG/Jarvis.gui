@@ -22,7 +22,12 @@ FocusScope {
 
         Keys.onPressed: {
                  if ((event.key === Qt.Key_Return) && (event.modifiers & Qt.ShiftModifier))
+                 {
                      expandInput();
+                     event.accepted = true;
+
+                 }
+
              }
 
         function expandInput()
