@@ -7,38 +7,45 @@ FocusScope {
     signal accepted
     property alias text: input.text
     property alias item: input
-    TextInput{
+
+
+    TextEdit{
         id: input
-        width: parent.width - 12
-        height: parent.height-10
+
+        width:  parent.width - 12;
+        height: parent.height - 10;
+        focus: true
+
         anchors.centerIn: parent
-        maximumLength:21
         font.pixelSize: 16;
         font.bold: true
         color: "#151515"; text: qsTr(""); horizontalAlignment: TextInput.AlignHCenter; selectionColor: "mediumseagreen"
-        focus: true
-        onAccepted:{container.accepted()}
         selectByMouse: true
 
         Keys.onPressed: {
-                 if ((event.key === Qt.Key_Return) && (event.modifiers & Qt.ShiftModifier))
-                 {
-                     expandInput();
-                     event.accepted = true;
+            if ((event.key === Qt.Key_Return) && (event.modifiers & Qt.ShiftModifier))
+            {
+                expandInput();
 
-                 }
+            }
 
-             }
+            else if (event.key === Qt.Key_Return)
+            {
+                container.accepted();
+                input.height = 32
+                event.accepted = true;
+            }
+
+        }
 
         function expandInput()
         {
             if(input.height < (generalRec.height/3))
             {
-                 input.height += 32;
-                 container.height += 32;
+                input.height += 32;
+                container.height += 32;
             }
         }
-
 
     }
 }
