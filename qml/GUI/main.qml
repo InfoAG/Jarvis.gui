@@ -334,7 +334,6 @@ Rectangle {
             var room = StackMap.lastFocusedObject.name;
             client.msgToRoom(room,text);
             input.text = "";
-            input.height = 32;
         }
 
     }
