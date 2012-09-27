@@ -407,7 +407,7 @@ Rectangle {
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.topMargin: 5
-            text:"176.198.129.70";
+            text:"localhost";
             KeyNavigation.tab: port;
         }
 
@@ -459,7 +459,7 @@ Rectangle {
             anchors.right: parent.right
             anchors.top: port.bottom
             anchors.topMargin: 5
-            text: "Herp";
+            text: "Nick";
             KeyNavigation.tab: pwd
         }
 
@@ -485,7 +485,7 @@ Rectangle {
             anchors.right: parent.right
             anchors.top: nick.bottom
             anchors.topMargin: 5
-            text: "Alex stinkt";
+            text: "";
             item.readOnly: false
             KeyNavigation.tab: login
         }
