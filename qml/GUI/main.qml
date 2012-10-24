@@ -407,7 +407,7 @@ Rectangle {
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.topMargin: 5
-            text:"localhost";
+            text:"10.42.0.25";
             KeyNavigation.tab: port;
         }
 
