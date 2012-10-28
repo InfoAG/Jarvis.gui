@@ -22,12 +22,5 @@ release/
 object_script.*
 GUI
 !GUI/
-moc_qmlapplicationviewer.cpp
 qrc_ressources.cpp
-moc_QMLFunctionDefinition.cpp
-moc_QMLFunctionModule.cpp
-moc_QMLJarvisClient.cpp
-moc_QMLModule.cpp
-moc_QMLModulePackage.cpp
-moc_QMLOperatorModule.cpp
-moc_QMLScope.cpp
+moc_*

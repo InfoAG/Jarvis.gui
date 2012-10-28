@@ -4,23 +4,25 @@
 #include <QObject>
 #include <QPair>
 #include <QStringList>
+#include "FunctionSignature.h"
 
 class QMLFunctionDefinition : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString identifier READ identifier)
+    //Q_PROPERTY(QString identifier READ identifier)
     Q_PROPERTY(QStringList arguments READ arguments)
     Q_PROPERTY(QString definition READ definition)
 
 private:
-    QString identifier_, definition_;
+    FunctionSignature signature_;
     QStringList arguments_;
+    QString definition_;
 
 public:
-    QMLFunctionDefinition(const QString &key, const QPair<QStringList, QString> &value) : identifier_(key),
-        definition_(value.second), arguments_(value.first) {};
+    QMLFunctionDefinition(const FunctionSignature &key, const QPair<QStringList, QString> &value) : signature_(key),
+        arguments_(value.first), definition_(value.second) {};
 
-    QString identifier() const { return identifier_; }
+    //QString identifier() const { return identifier_; }
     QStringList arguments() const { return arguments_; }
     QString definition() const { return definition_; }
 };

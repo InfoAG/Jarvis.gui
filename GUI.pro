@@ -68,10 +68,12 @@ HEADERS += \
     QMLJarvisClient.h \
     QMLModulePackage.h \
     QMLModule.h \
-    QMLOperatorModule.h \
     QMLFunctionModule.h \
     QMLFunctionDefinition.h \
-    QMLRoom.h
+    QMLRoom.h \
+    QMLUnaryOperatorModule.h \
+    QMLBinaryOperatorModule.h \
+    QMLVariableDefinition.h
 
 RESOURCES += \
     ressources.qrc

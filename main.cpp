@@ -10,7 +10,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     qmlRegisterType<QMLJarvisClient>("QMLJarvisClient",0,1,"QMLJarvisClient");
     qmlRegisterType<QMLRoom>();
-    qmlRegisterType<QMLOperatorModule>();
+    qmlRegisterType<QMLBinaryOperatorModule>();
+    qmlRegisterType<QMLUnaryOperatorModule>();
     qmlRegisterType<QMLFunctionModule>();
     qmlRegisterType<QMLFunctionDefinition>();
 
