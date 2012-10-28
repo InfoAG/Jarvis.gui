@@ -124,10 +124,11 @@ Rectangle {
         }
 
         //2.variables
-        for (var key in info.variables)
+        for(var i = 0; i < info.variables.length; i++)
         {
+            vars.append(info.variables[i].identifier + "=" + info.variables[i].definition);
 
-            vars.append(key + "=" +  info.variables[key])
+            //vars.append(key + "=" +  info.variables[key])
         }
 
         //3.funcions
@@ -159,15 +160,13 @@ Rectangle {
         users.remove(user);
     }
 
-    function addVariable(id,def)
+    function addVariableDef(id,def)
     {
         for(var i = 0; i < vars.number; i++)
         {
-            console.log(vars.model.get(i).name);
 
             var tempstring = vars.model.get(i).name
             tempstring = tempstring.substring(0,tempstring.indexOf("="));
-            console.log(id + " herp " + tempstring)
             if(id == tempstring)
             {
                 vars.removeWithIndex(i);
@@ -176,6 +175,24 @@ Rectangle {
 
         }
         vars.append(id + "=" + def);
+    }
+
+    function addVariableDec(id,type)
+    {
+        for(var i = 0; i < vars.number; i++)
+        {
+
+            var tempstring = vars.model.get(i).name
+            tempstring = tempstring.substring(0,tempstring.indexOf("="));
+            if(id == tempstring)
+            {
+                vars.removeWithIndex(i);
+
+            }
+
+        }
+        vars.append(id + "(" + type + ")");
+
     }
 
 

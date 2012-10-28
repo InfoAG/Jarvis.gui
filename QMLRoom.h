@@ -6,7 +6,6 @@
 #include <QString>
 #include <QPair>
 #include "Room.h"
-#include <QVariantMap>
 #include "QMLFunctionDefinition.h"
 #include "QMLVariableDefinition.h"
 #include "FunctionSignature.h"
@@ -20,8 +19,6 @@ class QMLRoom : public QObject
 
 private:
     QStringList clients_;
-
-
     QList<QMLFunctionDefinition*> functions_;
     QList<QMLVariableDefinition*> variables_;
 

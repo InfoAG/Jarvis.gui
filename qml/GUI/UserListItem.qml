@@ -52,6 +52,7 @@ Item
         model: scopeModel
         delegate: scopeDelegate
         focus: true
+        clip: true
     }
 
 

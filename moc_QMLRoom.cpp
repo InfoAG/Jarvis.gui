@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'QMLRoom.h'
 **
-** Created: Wed Sep 26 18:43:51 2012
+** Created: Sun Oct 28 20:01:50 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -32,14 +32,15 @@ static const uint qt_meta_data_QMLRoom[] = {
 
  // properties: name, type, flags
       20,    8, 0x0b095001,
-      40,   28, 0x08095001,
-      98,   50, 0x00095009,
+      76,   28, 0x00095009,
+     134,   86, 0x00095009,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_QMLRoom[] = {
-    "QMLRoom\0QStringList\0clients\0QVariantMap\0"
+    "QMLRoom\0QStringList\0clients\0"
+    "QDeclarativeListProperty<QMLVariableDefinition>\0"
     "variables\0QDeclarativeListProperty<QMLFunctionDefinition>\0"
     "functions\0"
 };
@@ -89,7 +90,7 @@ int QMLRoom::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         void *_v = _a[0];
         switch (_id) {
         case 0: *reinterpret_cast< QStringList*>(_v) = clients(); break;
-        case 1: *reinterpret_cast< QVariantMap*>(_v) = variables(); break;
+        case 1: *reinterpret_cast< QDeclarativeListProperty<QMLVariableDefinition>*>(_v) = variables(); break;
         case 2: *reinterpret_cast< QDeclarativeListProperty<QMLFunctionDefinition>*>(_v) = functions(); break;
         }
         _id -= 3;

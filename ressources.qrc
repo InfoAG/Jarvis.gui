@@ -20,5 +20,8 @@
         <file>images/close.png</file>
         <file>images/quit.png</file>
         <file>qml/GUI/RoomStack.qml</file>
+        <file>qml/GUI/PackageWindow.qml</file>
+        <file>qml/GUI/DropDownMenu.qml</file>
+        <file>images/triangle.png</file>
     </qresource>
 </RCC>

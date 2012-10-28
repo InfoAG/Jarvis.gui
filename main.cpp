@@ -12,8 +12,10 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     qmlRegisterType<QMLRoom>();
     qmlRegisterType<QMLBinaryOperatorModule>();
     qmlRegisterType<QMLUnaryOperatorModule>();
+    qmlRegisterType<QMLModule>();
     qmlRegisterType<QMLFunctionModule>();
     qmlRegisterType<QMLFunctionDefinition>();
+    qmlRegisterType<QMLVariableDefinition>();
 
     QmlApplicationViewer viewer;
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);

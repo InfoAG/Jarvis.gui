@@ -72,43 +72,13 @@ Rectangle {
     }
 
 
-
-    Rectangle
+    PackageWindow
     {
         id: information
-        color: "transparent"
-        opacity: 0
-        border.width: 2
-        border.color: "mediumseagreen"
-        width: 400
-        height: 300
         x: parent.width/2-information.width/2+500
         y: parent.height/2-information.height/2
-        z:10
-
-        Rectangle
-        {
-            id: informationbg
-            color: "#909090"
-            opacity: 0
-            anchors.fill: parent
-        }
-
-
-
-        Button
-        {
-            text: "close"
-            width: 100; height: 32
-            anchors.bottom: parent.bottom
-            anchors.right: parent.right
-            anchors.margins: 5
-            onClicked: generalRec.state = "connected"
-        }
-
     }
 
-    //Object of JarvisClient
     QMLJarvisClient
     {
         id: client
@@ -117,16 +87,22 @@ Rectangle {
             for(var i in pkgs)
             {
 
-                for(var j = 0; j < pkgs[i].operators.length; j++)
+                for(var j = 0; j < pkgs[i].unaryOperators.length; j++)
                 {
-                    console.log(pkgs[i].operators[j].name);
+                    console.log(pkgs[i].unaryOperators[j].name);
                     //operators.append(pkgs[i].operators[j].name)
                 }
 
-//                for(var j = 0; j < pkgs[i].terminals.length; j++)
-//                {
-//                    console.log(pkgs[i].terminals[j].name);
-//                }
+                for(var j = 0; j < pkgs[i].binaryOperators.length; j++)
+                {
+                    console.log(pkgs[i].binaryOperators[j].name);
+                    //operators.append(pkgs[i].operators[j].name)
+                }
+
+                for(var j = 0; j < pkgs[i].terminals.length; j++)
+                {
+                    console.log(pkgs[i].terminals[j].name);
+                }
 
                 for(var j = 0; j < pkgs[i].functions.length; j++)
                 {
@@ -197,24 +173,39 @@ Rectangle {
         }
 
 
-        onNewFunction:
+//        onnewfunction
+//        {
+//            /*var roomname = room;
+//            var component = StackMap.map[roomname];
+//            console.log(arguments.length);
+//            component.addFunction(identifier,arguments,def);*/
+
+//            //void newFunction(const QString &room, const QString &identifier, const QList<QPair<QString, QString>> &arguments, const QString &def);
+
+//            //console.log(identifier + "   " + arguments.at[0].first + "  " + def)
+
+
+//        }
+
+        onDeclaredVariable:
         {
             var roomname = room;
             var component = StackMap.map[roomname];
-            console.log(arguments.length);
-            component.addFunction(identifier,arguments,def);
+            component.addVariableDec(identifier,type)
 
-            //void newFunction(const QString &room, const QString &identifier, const QStringList &arguments, const QString &def);
-
+            //void declaredVariable(const QString &room, const QString &identifier, const QString &type);
         }
 
-        onNewVariable:
+        onDefinedVariable:
         {
             var roomname = room;
             var component = StackMap.map[roomname];
-            component.addVariable(identifier,definition)
-        }
+            component.addVariableDef(identifier,definition)
 
+
+            //void definedVariable(const QString &room, const QString &identifier, const QString &definition);
+
+        }
         onError:
         {
             console.log("error");
@@ -542,7 +533,6 @@ Rectangle {
         State {
             name: "showInformation";
             PropertyChanges{ target: information; opacity: 1; x: parent.width/2-information.width/2; y: parent.height/2-information.height/2}
-            PropertyChanges{ target: informationbg; opacity:0.5}
             PropertyChanges { target: staterec; opacity:0}
             PropertyChanges { target: loginwindow; opacity:0}
             AnchorChanges { target: sendbutton; anchors.right: parent.right; anchors.bottom: parent.bottom;}
