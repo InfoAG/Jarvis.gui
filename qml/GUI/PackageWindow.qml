@@ -166,7 +166,7 @@ Rectangle
 
     function addBinOps(op)
     {
-        binop.model.append({"modelData":op});
+        binop.model.append({"modelText":op});
 
         var string = binop.header
         string = string.substring(0,string.indexOf("("));
@@ -176,7 +176,7 @@ Rectangle
 
     function addUnOps(op)
     {
-        unop.model.append({"modelData":op});
+        unop.model.append({"modelText":op});
 
         var string = unop.header
         string = string.substring(0,string.indexOf("("));
@@ -186,7 +186,7 @@ Rectangle
 
     function addTerminals(op)
     {
-        term.model.append({"modelData":op});
+        term.model.append({"modelText":op});
 
         var string = term.header
         string = string.substring(0,string.indexOf("("));
@@ -196,7 +196,7 @@ Rectangle
 
     function addFunctions(op)
     {
-        func.model.append({"modelData":op});
+        func.model.append({"modelText":op});
 
         var string = func.header
         string = string.substring(0,string.indexOf("("));

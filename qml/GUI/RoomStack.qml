@@ -166,11 +166,24 @@ Rectangle {
         {
 
             var tempstring = vars.model.get(i).name
-            tempstring = tempstring.substring(0,tempstring.indexOf("="));
-            if(id == tempstring)
+            if(tempstring.indexOf("=") !== -1)
             {
-                vars.removeWithIndex(i);
+                tempstring = tempstring.substring(0,tempstring.indexOf("="));
+                if(id == tempstring)
+                {
+                    vars.removeWithIndex(i);
 
+                }
+            }
+
+            else
+            {
+                tempstring = tempstring.substring(0,tempstring.indexOf("("));
+                if(id == tempstring)
+                {
+                    vars.removeWithIndex(i);
+
+                }
             }
 
         }
@@ -179,20 +192,7 @@ Rectangle {
 
     function addVariableDec(id,type)
     {
-        for(var i = 0; i < vars.number; i++)
-        {
-
-            var tempstring = vars.model.get(i).name
-            tempstring = tempstring.substring(0,tempstring.indexOf("="));
-            if(id == tempstring)
-            {
-                vars.removeWithIndex(i);
-
-            }
-
-        }
         vars.append(id + "(" + type + ")");
-
     }
 
 

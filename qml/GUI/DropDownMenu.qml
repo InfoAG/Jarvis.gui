@@ -102,7 +102,7 @@ Rectangle {
                     height: comboBox.height;
 
                     Text {
-                        text: modelData
+                        text: modelText
                         anchors.top: parent.top;
                         anchors.left: parent.left;
                         anchors.margins: 5;
