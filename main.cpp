@@ -20,6 +20,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QmlApplicationViewer viewer;
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     viewer.setSource(QUrl("qrc:/qml/GUI/main.qml"));
+    //viewer.setWindowFlags(Qt::FramelessWindowHint);
     viewer.showExpanded();
 
     return app->exec();

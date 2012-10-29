@@ -2,20 +2,36 @@ import QtQuick 1.1
 
 Rectangle {
         id:comboBox
-        property variant items: ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]
+        property alias model: listmodel
         property string header: "header"
-        signal comboClicked;
+        property int count: listmodel.count
+
+        signal extendedBox
+        signal retractedBox
+
         z: 100;
+        height: 30
+        width: 100
         smooth:true;
         color: "transparent"
+
+
+        ListModel
+        {
+            id: listmodel
+        }
 
         Rectangle {
             id:chosenItem
             radius:4;
             width:parent.width;
             height:comboBox.height;
-            color: "lightsteelblue"
             smooth:true;
+            color: "#CCFFCC"
+            border.color: "mediumseagreen"
+            border.width: 2
+
+
             Image
             {
                 id: triangle
@@ -41,10 +57,12 @@ Rectangle {
                         if(comboBox.state == "dropDown")
                         {
                             triangle.rotation = 90;
+                            extendedBox();
                         }
                         else
                         {
                             triangle.rotation = 0;
+                            retractedBox();
                         }
                     }
                 }
@@ -72,12 +90,12 @@ Rectangle {
             radius:4;
             anchors.top: chosenItem.bottom;
             anchors.margins: 2;
-            color: "lightgray"
+            color: "#CCFFCC"
 
             ListView {
                 id:listView
                 height:500;
-                model: comboBox.items
+                model: listmodel
                 currentIndex: 0
                 delegate: Item{
                     width:comboBox.width;
@@ -94,19 +112,19 @@ Rectangle {
             }
         }
 
-        Component {
-            id: highlight
-            Rectangle {
-                width:comboBox.width;
-                height:comboBox.height;
-                color: "red";
-                radius: 4
-            }
-        }
+//        Component {
+//            id: highlight
+//            Rectangle {
+//                width:comboBox.width;
+//                height:comboBox.height;
+//                color: "red";
+//                radius: 4
+//            }
+//        }
 
         states: State {
             name: "dropDown";
-            PropertyChanges { target: dropDown; height:40*comboBox.items.length }
+            PropertyChanges { target: dropDown; height:30*listmodel.count }
         }
 
         transitions: Transition {

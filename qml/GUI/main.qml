@@ -90,23 +90,34 @@ Rectangle {
                 for(var j = 0; j < pkgs[i].unaryOperators.length; j++)
                 {
                     console.log(pkgs[i].unaryOperators[j].name);
-                    //operators.append(pkgs[i].operators[j].name)
+                    information.addUnOps(pkgs[i].unaryOperators[j].name)
+
                 }
+
+                console.log("")
 
                 for(var j = 0; j < pkgs[i].binaryOperators.length; j++)
                 {
                     console.log(pkgs[i].binaryOperators[j].name);
-                    //operators.append(pkgs[i].operators[j].name)
+                    information.addBinOps(pkgs[i].binaryOperators[j].name)
                 }
+
+                console.log("")
+
 
                 for(var j = 0; j < pkgs[i].terminals.length; j++)
                 {
                     console.log(pkgs[i].terminals[j].name);
+                    information.addTerminals(pkgs[i].terminals[j].name)
                 }
+
+                console.log("")
+
 
                 for(var j = 0; j < pkgs[i].functions.length; j++)
                 {
                     console.log(pkgs[i].functions[j].name);
+                    information.addFunctions(pkgs[i].functions[j].name)
                 }
 
 
@@ -487,6 +498,7 @@ Rectangle {
             text: "Login"
             anchors.right: parent.right; width: 100; height: 32; anchors.bottom: parent.bottom; anchors.bottomMargin: 5
             onClicked: {generalRec.state = "connecting"; client.connect(server.text,port.text,nick.text,pwd.text)}
+            //onClicked: {generalRec.state = "connected"; client.connect(server.text,port.text,nick.text,pwd.text)}
             Keys.onEnterPressed: {generalRec.state = "connecting"; client.connect(server.text,port.text,nick.text,pwd.text)}
             KeyNavigation.tab: server
         }
