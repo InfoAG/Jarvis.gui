@@ -62,7 +62,8 @@ OTHER_FILES += \
     images/lineedit.sci \
     images/lineedit.png \
     map.js \
-    images/close.png
+    images/close.png \
+    images/gear.svg
 
 HEADERS += \
     QMLJarvisClient.h \

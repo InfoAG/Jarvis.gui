@@ -23,5 +23,6 @@
         <file>qml/GUI/PackageWindow.qml</file>
         <file>qml/GUI/DropDownMenu.qml</file>
         <file>images/triangle.png</file>
+        <file>images/gear.svg</file>
     </qresource>
 </RCC>

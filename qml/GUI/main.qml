@@ -26,12 +26,11 @@ Rectangle {
             width:30
             z:5
 
-            Rectangle
+            Image
             {
-                z:4
                 anchors.fill: parent
-                color:"grey"
-
+                source: "../../images/gear.svg"
+                smooth: true
             }
 
             onClicked:
@@ -322,6 +321,7 @@ Rectangle {
     Input
     {
         id: input
+        isExtendible: true
         focus: true
         x:generalRec.width+500
         y:generalRec.height+500
@@ -409,7 +409,7 @@ Rectangle {
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.topMargin: 5
-            text:"176.198.129.70";
+            text:"localhost";
             KeyNavigation.tab: port;
         }
 

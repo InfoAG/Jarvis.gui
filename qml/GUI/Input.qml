@@ -7,6 +7,7 @@ FocusScope {
     signal accepted
     property alias text: input.text
     property alias item: input
+    property bool isExtendible: false
 
 
 
@@ -20,6 +21,8 @@ FocusScope {
 
         function ensureVisibilty(r)
         {
+            if(isExtendible)
+            {
                  if (contentX >= r.x)
                      contentX = r.x;
                  else if (contentX+width <= r.x+r.width)
@@ -28,6 +31,7 @@ FocusScope {
                      contentY = r.y;
                  else if (contentY+height <= r.y+r.height)
                      contentY = r.y+r.height-height;
+            }
         }
 
 
@@ -35,25 +39,31 @@ FocusScope {
         id: input
         width:  parent.width - 12;
         height: parent.height - 10;
+        /*width: flick.width
+        height: flick.height*/
         focus: true
-
         anchors.centerIn: parent
         font.pixelSize: 16;
         font.bold: true
         color: "#151515"; text: qsTr(""); horizontalAlignment: TextInput.AlignHCenter; selectionColor: "mediumseagreen"
         selectByMouse: true
 
-        wrapMode: TextEdit.Wrap
+        wrapMode: {
+            if(isExtendible)
+                TextEdit.Wrap
+            else
+                TextEdit.NoWrap
+        }
         onCursorRectangleChanged: flick.ensureVisibilty(cursorRectangle)
 
         Keys.onPressed: {
-            if ((event.key === Qt.Key_Return) && (event.modifiers & Qt.ShiftModifier))
+            if ((event.key === Qt.Key_Return) && (event.modifiers & Qt.ShiftModifier) && isExtendible)
             {
                 expandInput();
 
             }
 
-            else if (event.key === Qt.Key_Return)
+            else if (event.key === Qt.Key_Return && isExtendible)
             {
                 container.accepted();
                 container.height = 32
@@ -66,8 +76,9 @@ FocusScope {
 
         function expandInput()
         {
-            if(flick.height < (generalRec.height/3))
+            if(flick.height < (generalRec.height/3) && isExtendible)
             {
+                console.log(input.paintedHeight)
                 flick.height += 32;
                 container.height += 32;
             }

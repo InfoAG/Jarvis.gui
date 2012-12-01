@@ -20,14 +20,20 @@ Rectangle {
         anchors.margins: 5
         anchors.right: userlist.left
 
-        Text
+
+        Flickable
         {
-            id:outputtext
+            id: flick1
+            contentHeight: outputtext.paintedHeight
             anchors.fill: parent
-            anchors.margins: 5
-
+            clip: true
+            Text
+            {
+                id:outputtext
+                anchors.fill: parent
+                anchors.margins: 5
+            }
         }
-
 
 
         Text
