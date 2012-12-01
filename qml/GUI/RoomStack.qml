@@ -128,7 +128,6 @@ Rectangle {
         {
             vars.append(info.variables[i].identifier + "=" + info.variables[i].definition);
 
-            //vars.append(key + "=" +  info.variables[key])
         }
 
         //3.funcions
@@ -136,10 +135,10 @@ Rectangle {
         {
             var string = info.functions[i].identifier + "(";
 
-            for(var j = 0; j < info.functions[i].arguments.length; j++)
+            for(var j = 0; j < info.functions[i].argumentNames.length; j++)
             {
-                string += info.functions[i].arguments[j];
-                if(j != info.functions[i].arguments.length-1)
+                string += info.functions[i].argumentNames[j];
+                if(j != info.functions[i].argumentNames.length-1)
                     string += ",";
             }
 
