@@ -87,6 +87,7 @@ void ServerObject::performLogin()
 
 
     connect(client,SIGNAL(receivedInitInfo(QStringList,QList<ModulePackage>)),this,SLOT(receiveInitInfo(QStringList,QList<ModulePackage>)));
+    connect(client,SIGNAL(enteredRoom(QString,Room)),this,SLOT(enteredRoom(QString,Room)));
 }
 
 
@@ -96,6 +97,24 @@ void ServerObject::receiveInitInfo(QStringList globalRooms,QList<ModulePackage> 
     stackedWidget->setCurrentWidget(serverPage);
 
     emit receivedInitInfo(globalRooms,packages,this->server->text());
+}
+
+void ServerObject::enterRoom(QString room)
+{
+    this->client->enterRoom(room);
+}
+
+void ServerObject::enteredRoom(QString name, Room info)
+{
+    //stuff
+    qDebug() << "im raum " + name;
+    emit roomOK(name,this->server->text());
+}
+
+
+void ServerObject::roomChanged(QString name)
+{
+    qDebug() << "im raum " + name;
 }
 
 

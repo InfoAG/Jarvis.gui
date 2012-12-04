@@ -25,6 +25,8 @@ class ServerObject : public QWidget
 public:
     ServerObject(int height, int width);
     QWidget* getWidget() {return this->stackedWidget;}
+    void enterRoom(QString room);
+    void roomChanged(QString name);
 
 private:
     QStackedWidget* stackedWidget;
@@ -63,9 +65,11 @@ private:
 
 signals:
     void receivedInitInfo(QStringList globalRooms,QList<ModulePackage> packages, QString name);
+    void roomOK(QString name, QString server);
 private slots:
     void performLogin();
-     void receiveInitInfo(QStringList,QList<ModulePackage>);
+    void receiveInitInfo(QStringList,QList<ModulePackage>);
+    void enteredRoom(QString name, Room info);
 
 };
 

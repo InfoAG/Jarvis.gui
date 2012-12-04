@@ -14,6 +14,7 @@ namespace Ui {
 class MainWindow;
 }
 
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -23,7 +24,7 @@ public:
     ~MainWindow();
     
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow* ui;
     QStandardItem* root;
     QStandardItemModel* treeModel;
     QMap<QString,ServerObject*> serverObjects; //QMap out of serverID and ServerObject
@@ -35,6 +36,7 @@ public slots:
     void receiveInitInfo(QStringList globalRooms, QList<ModulePackage> packges, QString name);
     void activate(QModelIndex index);
     void modelDataChanged(QStandardItem* item);
+    void roomOK(QString name, QString server);
 
 
 };
