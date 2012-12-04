@@ -33,7 +33,7 @@ private:
 
 public slots:
     void newServerConnection();
-    void receiveInitInfo(QStringList globalRooms, QList<ModulePackage> packges, QString name);
+    void receiveInitInfo(QString name);
     void activate(QModelIndex index);
     void modelDataChanged(QStandardItem* item);
     void roomOK(QString name, QString server);

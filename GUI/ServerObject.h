@@ -13,6 +13,9 @@
 #include <QTabWidget>
 #include <QListWidget>
 #include <QMap>
+#include <QTreeView>
+#include <QStandardItemModel>
+#include <QListView>
 
 
 #include "ModulePackage.h"
@@ -30,6 +33,7 @@ public:
 
 private:
     QStackedWidget* stackedWidget;
+    unsigned int roomCounter;
 
     QLabel* serverLabel; //loginPage stuff
     QLineEdit* server;
@@ -51,25 +55,35 @@ private:
     QListWidget* variables;
     QListWidget* functions;
 
+    QTreeView* packageView; //infoPage stuff
+    QStandardItemModel* packageModel;
+    QListView* roomView;
+    QStandardItemModel* roomModel;
 
 
 
     QWidget* loginPage;
     QWidget* serverPage;
+    QWidget* infoPage;
     QGridLayout* loginLayout;
 
     JarvisClient* client;
+    QMap<QString,QString> roomContent;
+    QString currentRoom;
+
 
 
 
 
 signals:
-    void receivedInitInfo(QStringList globalRooms,QList<ModulePackage> packages, QString name);
+    void receivedInitInfo(QString name);
     void roomOK(QString name, QString server);
 private slots:
     void performLogin();
     void receiveInitInfo(QStringList,QList<ModulePackage>);
     void enteredRoom(QString name, Room info);
+    void msgInRoom(QString room, QString sender ,QString msg);
+    void msgToRoom();
 
 };
 

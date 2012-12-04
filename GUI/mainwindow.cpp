@@ -35,19 +35,17 @@ void MainWindow::newServerConnection()
     ui->horizontalLayout->addWidget(newServer->getWidget());
     ui->horizontalLayout->setStretch(1,4);
 
-    connect(newServer,SIGNAL(receivedInitInfo(QStringList,QList<ModulePackage>,QString)),this,SLOT(receiveInitInfo(QStringList,QList<ModulePackage>,QString)));
+    connect(newServer,SIGNAL(receivedInitInfo(QString)),this,SLOT(receiveInitInfo(QString)));
     connect(newServer,SIGNAL(roomOK(QString,QString)),this,SLOT(roomOK(QString,QString)));
 }
 
-void MainWindow::receiveInitInfo(QStringList globalRooms, QList<ModulePackage> packages, QString name)
+void MainWindow::receiveInitInfo(QString name)
 {
     currentServer = name;
     this->serverObjects[name] = (ServerObject*)QObject::sender(); //associate ServerName with its ServerObject
     QStandardItem* serverItem = new QStandardItem(name);
     serverItem->setEditable(false);
     this->root->appendRow(serverItem);
-    //this->root->child(ui->treeView->currentIndex().row(),0);
-
     serverItem->appendRow(new QStandardItem("new Room"));
 }
 
@@ -57,11 +55,10 @@ void MainWindow::activate(QModelIndex index) //item clicked
     QString server;
     if(treeModel->itemFromIndex(index) != 0 && treeModel->itemFromIndex(index)->parent() != 0)
     {
-        //roomnode
+        //server and roomnode
         room = treeModel->itemFromIndex(index)->text();
         server = treeModel->itemFromIndex(index)->parent()->text();
         serverObjects[server]->roomChanged(room);
-        //focusChange im serverobject
     }
     else if(treeModel->itemFromIndex(index) != 0)
     {
@@ -73,10 +70,13 @@ void MainWindow::activate(QModelIndex index) //item clicked
     if(server != currentServer)
     {
         //reset currently shown server
-        QLayoutItem* item = ui->horizontalLayout->itemAt(1);
-        ui->horizontalLayout->removeItem(item);
+        /*QLayoutItem* item = ui->horizontalLayout->itemAt(1);
+        ui->horizontalLayout->removeItem(item);*/
+        serverObjects[currentServer]->getWidget()->setParent(NULL);
         ui->horizontalLayout->addWidget(serverObjects[server]->getWidget());
         ui->horizontalLayout->setStretch(1,4);
+
+        currentServer = server;
     }
 
 
