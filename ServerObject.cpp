@@ -107,6 +107,7 @@ void ServerObject::performLogin()
     connect(client,SIGNAL(receivedInitInfo(QStringList,QList<ModulePackage>)),this,SLOT(receiveInitInfo(QStringList,QList<ModulePackage>)));
     connect(client,SIGNAL(enteredRoom(QString,Room)),this,SLOT(enteredRoom(QString,Room)));
     connect(client,SIGNAL(msgInRoom(QString,QString,QString)),this,SLOT(msgInRoom(QString,QString,QString)));
+    connect(client,SIGNAL(declaredVariable(QString,QString,QString)),this,SLOT(declaredVar(QString,QString,QString)));
 }
 
 
@@ -182,15 +183,15 @@ void ServerObject::enteredRoom(QString name, Room info)
 void ServerObject::roomChanged(QString name)
 {
     currentRoom = name;
-    this->output->setText(roomContent[name]);
+    this->output->setText(roomContent[name].stringContent);
 }
 
 void ServerObject::msgInRoom(QString room, QString sender, QString msg)
 {
-    roomContent[room] += sender + ": " + msg + "\n";
+    roomContent[room].stringContent += sender + ": " + msg + "\n";
     if(currentRoom == room)
     {
-        this->output->setText(roomContent[room]);
+        this->output->setText(roomContent[room].stringContent);
     }
 }
 
@@ -203,4 +204,10 @@ void ServerObject::msgToRoom()
 
 
 
-
+void ServerObject::declaredVar(QString rm, QString id , QString tp)
+{
+    //roomContent[rm].vars.append(new)
+    QListWidgetItem* item = new QListWidgetItem(id);
+    item->setToolTip(tp);
+    this->variables->addItem(item);
+}

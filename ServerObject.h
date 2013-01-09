@@ -68,7 +68,16 @@ private:
     QGridLayout* loginLayout;
 
     JarvisClient* client;
-    QMap<QString,QString> roomContent;
+
+    struct roomData
+    {
+        QString stringContent;
+        QList<QListWidgetItem*> vars;
+        QList<QListWidgetItem*> funcs;
+        QList<QListWidgetItem*> user;
+    };
+
+    QMap<QString,roomData> roomContent;
     QString currentRoom;
 
 
@@ -84,6 +93,7 @@ private slots:
     void enteredRoom(QString name, Room info);
     void msgInRoom(QString room, QString sender ,QString msg);
     void msgToRoom();
+    void declaredVar(QString rm, QString id , QString tp);
 
 };
 

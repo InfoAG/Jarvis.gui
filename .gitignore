@@ -14,3 +14,7 @@
 #ShadowBuild
 GUI-*
 *.user
+
+Makefile*
+debug/
+ui_*
