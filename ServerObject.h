@@ -97,7 +97,8 @@ private slots:
     void msgToRoom();
     void declaredVar(QString rm, QString id , QString tp);
     void definedVariable(QString rm, QString id, QString def);
-    //void newClient(QString rm, QString nk);
+    void newClient(QString rm, QString nk);
+    void clientLeft(QString rm, QString nk);
 
 };
 

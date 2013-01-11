@@ -109,7 +109,8 @@ void ServerObject::performLogin()
     connect(client,SIGNAL(msgInRoom(QString,QString,QString)),this,SLOT(msgInRoom(QString,QString,QString)));
     connect(client,SIGNAL(declaredVariable(QString,QString,QString)),this,SLOT(declaredVar(QString,QString,QString)));
     connect(client,SIGNAL(definedVariable(QString,QString,QString)),this,SLOT(definedVariable(QString,QString,QString)));
-    //connect(client,SIGNAL(newClient(QString,QString)),this,SLOT(newClient(QString,QString)));
+    connect(client,SIGNAL(newClient(QString,QString)),this,SLOT(newClient(QString,QString)));
+    connect(client,SIGNAL(clientLeft(QString,QString)),this,SLOT(clientLeft(QString,QString)));
 }
 
 
@@ -267,4 +268,18 @@ void ServerObject::definedVariable(QString rm, QString id, QString def)
         this->roomContent[rm].varWidget->findItems(id, Qt::MatchExactly).at(0)->setText(id+ "=" + def);
     else
         qDebug() << "shouldn happen ever";
+}
+
+
+void ServerObject::newClient(QString rm, QString nk)
+{
+    this->roomContent[rm].userWidget->addItem(nk);
+    this->roomContent[rm].userWidget->sortItems();
+}
+
+void ServerObject::clientLeft(QString rm, QString nk)
+{
+    QListWidgetItem* item = this->roomContent[rm].userWidget->findItems(nk,Qt::MatchExactly).at(0);
+    delete item;
+
 }
