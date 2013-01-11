@@ -51,9 +51,10 @@ private:
     QPushButton* processButton;
     QTextEdit* output;
     QTabWidget* info;
-    QListWidget* user;
+    QListWidget* users;
     QListWidget* variables;
     QListWidget* functions;
+    QHBoxLayout* hbox1;
 
     QTreeView* packageView; //infoPage stuff
     QStandardItemModel* packageModel;
@@ -72,9 +73,10 @@ private:
     struct roomData
     {
         QString stringContent;
-        QList<QListWidgetItem*> vars;
-        QList<QListWidgetItem*> funcs;
-        QList<QListWidgetItem*> user;
+        QListWidget* userWidget;
+        QListWidget* varWidget;
+        QListWidget* funcWidget;
+        QTabWidget* tab;
     };
 
     QMap<QString,roomData> roomContent;
@@ -94,6 +96,8 @@ private slots:
     void msgInRoom(QString room, QString sender ,QString msg);
     void msgToRoom();
     void declaredVar(QString rm, QString id , QString tp);
+    void definedVariable(QString rm, QString id, QString def);
+    //void newClient(QString rm, QString nk);
 
 };
 

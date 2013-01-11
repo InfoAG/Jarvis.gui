@@ -15,7 +15,7 @@ ServerObject::ServerObject(int height, int width)
     nickLabel = new QLabel("Nick:");
     pwdLabel = new QLabel("Password:");
     portLabel = new QLabel("Port:");
-    server = new QLineEdit("localhost");
+    server = new QLineEdit("176.198.129.70");
     nick = new QLineEdit("Nick");
     pwd = new QLineEdit("pwd");
     port = new QLineEdit("4200");
@@ -47,11 +47,11 @@ ServerObject::ServerObject(int height, int width)
     output->setReadOnly(true);
     info = new QTabWidget;
 
-    user = new QListWidget;
+    users = new QListWidget;
     variables = new QListWidget;
     functions = new QListWidget;
 
-    info->addTab(user, "Users");
+    info->addTab(users, "Users");
     info->addTab(variables, "Variables");
     info->addTab(functions,"Functions");
     info->setTabPosition(QTabWidget::East);
@@ -60,7 +60,7 @@ ServerObject::ServerObject(int height, int width)
     QHBoxLayout* hbox2 = new QHBoxLayout;
     hbox2->addWidget(input);
     hbox2->addWidget(processButton);
-    QHBoxLayout* hbox1 = new QHBoxLayout;
+    hbox1 = new QHBoxLayout;
     hbox1->addWidget(output,3);
     hbox1->addWidget(info,1);
     vbox->addLayout(hbox1);
@@ -108,6 +108,8 @@ void ServerObject::performLogin()
     connect(client,SIGNAL(enteredRoom(QString,Room)),this,SLOT(enteredRoom(QString,Room)));
     connect(client,SIGNAL(msgInRoom(QString,QString,QString)),this,SLOT(msgInRoom(QString,QString,QString)));
     connect(client,SIGNAL(declaredVariable(QString,QString,QString)),this,SLOT(declaredVar(QString,QString,QString)));
+    connect(client,SIGNAL(definedVariable(QString,QString,QString)),this,SLOT(definedVariable(QString,QString,QString)));
+    //connect(client,SIGNAL(newClient(QString,QString)),this,SLOT(newClient(QString,QString)));
 }
 
 
@@ -172,18 +174,63 @@ void ServerObject::enteredRoom(QString name, Room info)
     if(roomCounter == 0)
     {
         stackedWidget->setCurrentWidget(serverPage);
+        this->roomContent[name].userWidget = this->users;
+        this->roomContent[name].varWidget = this->variables;
+        this->roomContent[name].funcWidget = this->functions;
+        this->roomContent[name].tab = this->info;
+
+    }
+    else
+    {
+        this->hbox1->removeWidget(this->roomContent[currentRoom].tab);
+        this->roomContent[name].tab = new QTabWidget;
+        this->roomContent[name].userWidget = new QListWidget;
+        this->roomContent[name].varWidget = new QListWidget;
+        this->roomContent[name].funcWidget = new QListWidget;
+
+        this->roomContent[name].tab->addTab(this->roomContent[name].userWidget, "Users");
+        this->roomContent[name].tab->addTab(this->roomContent[name].varWidget, "Variables");
+        this->roomContent[name].tab->addTab(this->roomContent[name].funcWidget,"Functions");
+        this->roomContent[name].tab->setTabPosition(QTabWidget::East);
+        this->hbox1->addWidget(this->roomContent[name].tab,1);
     }
 
     this->roomCounter++;
     currentRoom = name;
     emit roomOK(name,this->server->text());
+
+    //add userlist to userWidget and sort them
+    this->roomContent[currentRoom].userWidget->addItems(info.clients);
+    this->roomContent[currentRoom].userWidget->sortItems();
+
+    //add existing variables to varWidget, setting the tooltips, checking for definition
+    for(auto it = info.variables.begin(); it != info.variables.end(); ++it)
+    {
+        QListWidgetItem* item = new QListWidgetItem();
+        item->setToolTip(it.value().first);
+        if(it.value().second == "")
+        {
+            item->setText(it.key());
+        }
+        else
+            item->setText(it.key()+"="+it.value().second);
+
+        this->roomContent[currentRoom].varWidget->addItem(item);
+        this->roomContent[currentRoom].varWidget->sortItems();
+    }
+
+
 }
 
 
 void ServerObject::roomChanged(QString name)
 {
-    currentRoom = name;
     this->output->setText(roomContent[name].stringContent);
+
+    this->hbox1->removeWidget(this->roomContent[currentRoom].tab);
+    this->roomContent[currentRoom].tab->setParent(0);
+    this->hbox1->addWidget(this->roomContent[name].tab,1);
+    currentRoom = name;
 }
 
 void ServerObject::msgInRoom(QString room, QString sender, QString msg)
@@ -206,8 +253,18 @@ void ServerObject::msgToRoom()
 
 void ServerObject::declaredVar(QString rm, QString id , QString tp)
 {
-    //roomContent[rm].vars.append(new)
     QListWidgetItem* item = new QListWidgetItem(id);
     item->setToolTip(tp);
-    this->variables->addItem(item);
+    this->roomContent[rm].varWidget->addItem(item);
+    this->roomContent[rm].varWidget->sortItems();
+}
+
+void ServerObject::definedVariable(QString rm, QString id, QString def)
+{
+    if(this->roomContent[rm].varWidget->findItems(id+"=", Qt::MatchContains).length() != 0)
+        this->roomContent[rm].varWidget->findItems(id+"=", Qt::MatchContains).at(0)->setText(id+ "=" + def);
+    else if(this->roomContent[rm].varWidget->findItems(id, Qt::MatchExactly).length() != 0)
+        this->roomContent[rm].varWidget->findItems(id, Qt::MatchExactly).at(0)->setText(id+ "=" + def);
+    else
+        qDebug() << "shouldn happen ever";
 }
