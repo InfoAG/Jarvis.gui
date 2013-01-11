@@ -1,6 +1,6 @@
 #include "ServerObject.h"
 
-ServerObject::ServerObject(int height, int width)
+ServerObject::ServerObject(int height, int width) : serverLabel("Server: "), pwdLabel("Password: "), nickLabel("Nick: "), portLabel("Port:")
 {
     roomCounter = 0;
     stackedWidget = new QStackedWidget;
@@ -11,23 +11,20 @@ ServerObject::ServerObject(int height, int width)
     frame->setStyleSheet(".QFrame {border: 3px solid gray;border-radius: 40px;background: QLinearGradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FF6600, stop: 1 #FFCC99);}");
     QGridLayout* innerLayout = new QGridLayout(frame);
 
-    serverLabel = new QLabel("Server:");
-    nickLabel = new QLabel("Nick:");
-    pwdLabel = new QLabel("Password:");
-    portLabel = new QLabel("Port:");
+
     server = new QLineEdit("176.198.129.70");
     nick = new QLineEdit("Nick");
     pwd = new QLineEdit("pwd");
     port = new QLineEdit("4200");
     loginButton = new QPushButton("Login");
 
-    innerLayout->addWidget(serverLabel,0,0);
+    innerLayout->addWidget(&serverLabel,0,0);
     innerLayout->addWidget(server,0,1);
-    innerLayout->addWidget(nickLabel,1,0);
+    innerLayout->addWidget(&nickLabel,1,0);
     innerLayout->addWidget(nick,1,1);
-    innerLayout->addWidget(pwdLabel,2,0);
+    innerLayout->addWidget(&pwdLabel,2,0);
     innerLayout->addWidget(pwd,2,1);
-    innerLayout->addWidget(portLabel,3,0);
+    innerLayout->addWidget(&portLabel,3,0);
     innerLayout->addWidget(port,3,1);
     innerLayout->addWidget(loginButton,4,0);
 
@@ -121,41 +118,53 @@ void ServerObject::receiveInitInfo(QStringList globalRooms,QList<ModulePackage> 
 
     for(int i = 0; i < globalRooms.size(); i++)
     {
-        roomModel->appendRow(new QStandardItem(globalRooms[i]));
+        QStandardItem* item = new QStandardItem(globalRooms[i]);
+        item->setEditable(false);
+        roomModel->appendRow(item);
     }
 
     for(int i = 0; i < packages.size(); i++)
     {
         QStandardItem* packageItem = new QStandardItem(packages[i].name);
+        packageItem->setEditable(false);
         packageModel->appendRow(packageItem);
 
         if(packages[i].binaryOperators.size() != 0)
         {
             QStandardItem* binOp = new QStandardItem("Binary Operators");
+            binOp->setEditable(false);
             packageItem->appendRow(binOp);
             for(int j = 0; j < packages[i].binaryOperators.size(); j++)
             {
-                binOp->appendRow(new QStandardItem(packages[i].binaryOperators[j].name));
+                QStandardItem* item = new QStandardItem(packages[i].binaryOperators[j].name);
+                item->setEditable(false);
+                binOp->appendRow(item);
             }
         }
 
         if(packages[i].unaryOperators.size() != 0)
         {
             QStandardItem* unOp = new QStandardItem("Unary Operators");
+            unOp->setEditable(false);
             packageItem->appendRow(unOp);
             for(int j = 0; j < packages[i].unaryOperators.size(); j++)
             {
-                unOp->appendRow(new QStandardItem(packages[i].unaryOperators[j].name));
+                QStandardItem* item = new QStandardItem(packages[i].unaryOperators[j].name);
+                item->setEditable(false);
+                unOp->appendRow(item);
             }
         }
 
         if(packages[i].terminals.size() != 0)
         {
             QStandardItem* terminals = new QStandardItem("Terminals");
+            terminals->setEditable(false);
             packageItem->appendRow(terminals);
             for(int j = 0; j < packages[i].terminals.size(); j++)
             {
-                terminals->appendRow(new QStandardItem(packages[i].terminals[j].name));
+                QStandardItem* item = new QStandardItem(packages[i].terminals[j].name);
+                item->setEditable(false);
+                terminals->appendRow(item);
             }
         }
 
@@ -254,9 +263,9 @@ void ServerObject::msgToRoom()
 
 void ServerObject::declaredVar(QString rm, QString id , QString tp)
 {
-    QListWidgetItem* item = new QListWidgetItem(id);
-    item->setToolTip(tp);
-    this->roomContent[rm].varWidget->addItem(item);
+    QListWidgetItem item(id);
+    item.setToolTip(tp);
+    this->roomContent[rm].varWidget->addItem(&item);
     this->roomContent[rm].varWidget->sortItems();
 }
 
