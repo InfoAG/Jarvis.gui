@@ -8,9 +8,8 @@ ServerObject::ServerObject(int height, int width)
     loginPage = new QWidget;
     loginLayout = new QGridLayout;
     frame = new QFrame;
-    frame->setStyleSheet(".QFrame {border: 3px solid gray;border-radius: 40px;background: QLinearGradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FF6600, stop: 1 #FFCC99);}");
+    frame->setStyleSheet(".QFrame {border-width: 7px; border-style: solid; border-top-color: QLinearGradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #101010, stop: 1 #33FFFF); border-right-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #33FFFF, stop: 1 #101010); border-left-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #101010, stop: 1 #33FFFF); border-bottom-color: QLinearGradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #33FFFF, stop: 1 #101010); background: qradialgradient(cx: 0.5, cy: -1.8,fx: 0.5, fy: 0,radius: 2,stop: 0 #a8a8a8,stop: 1 #1f1f1f);} QLabel {color: white; font-family: 'Lucida Console'} QLineEdit {border-width: 2px; border-style: solid; border-top-color: QLinearGradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #101010, stop: 1 #33FFFF); border-right-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #33FFFF, stop: 1 #101010); border-left-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #101010, stop: 1 #33FFFF); border-bottom-color: QLinearGradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #33FFFF, stop: 1 #101010); background: qlineargradient(x1:0, y1:0, x2:0, y2:1,stop:0 gray,stop: 0.2 white,stop:1 white);min-height: 24px;; color: black; font-family: 'Lucida Console'} QPushButton {font-family: 'Lucida Console';color: white; border: 1px solid black; border-radius: 3px; padding: 1px; background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #c4c4c4, stop: 0.5 #26272c); min-height: 20px} QPushButton:pressed {background: qlineargradient(x1:0, y1:0, x2:0, y2:1,stop:0 #7a7a7a,stop: 0.5 #101010);font-family: 'Lucida Console';color: white;} QPushButton:hover {color: #33FFFF;}");
     QGridLayout* innerLayout = new QGridLayout(frame);
-
 
     //server = new QLineEdit("176.198.129.70");
     serverLabel = new QLabel("Server: ");
@@ -85,8 +84,6 @@ ServerObject::ServerObject(int height, int width)
     infoLayout->addWidget(packageView);
     infoLayout->addWidget(roomView);
     infoPage->setLayout(infoLayout);
-
-
 
 
     stackedWidget->addWidget(loginPage);

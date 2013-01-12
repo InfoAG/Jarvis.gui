@@ -18,3 +18,6 @@ HEADERS  += mainwindow.h \
     ServerObject.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    ressources.qrc
