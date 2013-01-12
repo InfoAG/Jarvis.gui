@@ -246,6 +246,8 @@ void ServerObject::roomChanged(QString name)
     this->roomContent[currentRoom].tab->setParent(0);
     this->hbox1->addWidget(this->roomContent[name].tab,1);
     currentRoom = name;
+    //ensure vis
+    ensureVisibility();
 }
 
 void ServerObject::msgInRoom(QString room, QString sender, QString msg)
@@ -254,6 +256,8 @@ void ServerObject::msgInRoom(QString room, QString sender, QString msg)
     if(currentRoom == room)
     {
         this->output->setText(roomContent[room].stringContent);
+        //ensure vis
+        ensureVisibility();
     }
 }
 
@@ -261,6 +265,8 @@ void ServerObject::msgToRoom()
 {
     this->client->msgToRoom(currentRoom,this->input->text());
     this->input->clear();
+    //ensure vis
+    ensureVisibility();
 }
 
 
@@ -310,4 +316,11 @@ void ServerObject::setCurrentPage(pageType type)
             stackedWidget->setCurrentWidget(this->serverPage);
             break;
     }
+}
+
+void ServerObject::ensureVisibility()
+{
+    QTextCursor c = output->textCursor();
+    c.movePosition(QTextCursor::End);
+    output->setTextCursor(c);
 }

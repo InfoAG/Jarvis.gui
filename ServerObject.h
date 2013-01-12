@@ -80,6 +80,7 @@ private:
 
     QMap<QString,roomData> roomContent;
     QString currentRoom;
+    void ensureVisibility();
 
 public:
     enum pageType
