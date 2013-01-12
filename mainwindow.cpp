@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
 
 
     connect(ui->newServerConnectionAction,SIGNAL(triggered()),this,SLOT(newServerConnection()));
-    connect(ui->treeView,SIGNAL(activated(QModelIndex)),this,SLOT(activate(QModelIndex)));
+    connect(ui->treeView,SIGNAL(clicked(QModelIndex)),this,SLOT(activate(QModelIndex)));
     connect(this->treeModel,SIGNAL(itemChanged(QStandardItem*)),this,SLOT(modelDataChanged(QStandardItem*)));
 }
 
@@ -53,30 +53,34 @@ void MainWindow::activate(QModelIndex index) //item clicked
 {
     QString room;
     QString server;
-    if(treeModel->itemFromIndex(index) != 0 && treeModel->itemFromIndex(index)->parent() != 0)
+    if(treeModel->itemFromIndex(index)->isEditable() == false)
     {
-        //server and roomnode
-        room = treeModel->itemFromIndex(index)->text();
-        server = treeModel->itemFromIndex(index)->parent()->text();
-        serverObjects[server]->roomChanged(room);
-    }
-    else if(treeModel->itemFromIndex(index) != 0)
-    {
-        //servernode
-        server = treeModel->itemFromIndex(index)->text();
-        //packageWindow
-    }
+        if(treeModel->itemFromIndex(index) != 0 && treeModel->itemFromIndex(index)->parent() != 0)
+        {
+            //server and roomnode
+            room = treeModel->itemFromIndex(index)->text();
+            server = treeModel->itemFromIndex(index)->parent()->text();
+            serverObjects[server]->roomChanged(room);
 
-    if(server != currentServer)
-    {
-        //reset currently shown server
-        /*QLayoutItem* item = ui->horizontalLayout->itemAt(1);
-        ui->horizontalLayout->removeItem(item);*/
-        serverObjects[currentServer]->getWidget()->setParent(NULL);
-        ui->horizontalLayout->addWidget(serverObjects[server]->getWidget());
-        ui->horizontalLayout->setStretch(1,4);
+            serverObjects[server]->setCurrentPage(ServerObject::SERVER);
+        }
+        else if(treeModel->itemFromIndex(index) != 0)
+        {
+            //servernode
+            server = treeModel->itemFromIndex(index)->text();
 
-        currentServer = server;
+            serverObjects[server]->setCurrentPage(ServerObject::INFO);
+        }
+
+        if(server != currentServer)
+        {
+            //reset currently shown server
+            serverObjects[currentServer]->getWidget()->setParent(NULL);
+            ui->horizontalLayout->addWidget(serverObjects[server]->getWidget());
+            ui->horizontalLayout->setStretch(1,4);
+
+            currentServer = server;
+        }
     }
 
 

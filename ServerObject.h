@@ -30,7 +30,6 @@ public:
     QWidget* getWidget() {return this->stackedWidget;}
     void enterRoom(QString room);
     void roomChanged(QString name);
-
 private:
     QStackedWidget* stackedWidget;
     unsigned int roomCounter;
@@ -50,7 +49,7 @@ private:
     QLineEdit* input; //serverPage stuff
     QPushButton* processButton;
     QTextEdit* output;
-    QTabWidget* info;
+    QTabWidget* sidebar;
     QListWidget* users;
     QListWidget* variables;
     QListWidget* functions;
@@ -82,6 +81,16 @@ private:
     QMap<QString,roomData> roomContent;
     QString currentRoom;
 
+public:
+    enum pageType
+    {
+        LOGIN,
+        SERVER,
+        INFO
+    };
+
+    void setCurrentPage(pageType type);
+
 
 
 
@@ -92,7 +101,7 @@ signals:
 private slots:
     void performLogin();
     void receiveInitInfo(QStringList,QList<ModulePackage>);
-    void enteredRoom(QString name, Room info);
+    void enteredRoom(QString name, Room sidebar);
     void msgInRoom(QString room, QString sender ,QString msg);
     void msgToRoom();
     void declaredVar(QString rm, QString id , QString tp);

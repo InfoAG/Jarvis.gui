@@ -1,6 +1,6 @@
 #include "ServerObject.h"
 
-ServerObject::ServerObject(int height, int width) : serverLabel("Server: "), pwdLabel("Password: "), nickLabel("Nick: "), portLabel("Port:")
+ServerObject::ServerObject(int height, int width) : serverLabel("Server: "), nickLabel("Nick: "), pwdLabel("Password: "), portLabel("Port:")
 {
     roomCounter = 0;
     stackedWidget = new QStackedWidget;
@@ -12,7 +12,8 @@ ServerObject::ServerObject(int height, int width) : serverLabel("Server: "), pwd
     QGridLayout* innerLayout = new QGridLayout(frame);
 
 
-    server = new QLineEdit("176.198.129.70");
+    //server = new QLineEdit("176.198.129.70");
+    server = new QLineEdit("localhost");
     nick = new QLineEdit("Nick");
     pwd = new QLineEdit("pwd");
     port = new QLineEdit("4200");
@@ -42,16 +43,16 @@ ServerObject::ServerObject(int height, int width) : serverLabel("Server: "), pwd
     processButton = new QPushButton("Process");
     output = new QTextEdit;
     output->setReadOnly(true);
-    info = new QTabWidget;
+    sidebar = new QTabWidget;
 
     users = new QListWidget;
     variables = new QListWidget;
     functions = new QListWidget;
 
-    info->addTab(users, "Users");
-    info->addTab(variables, "Variables");
-    info->addTab(functions,"Functions");
-    info->setTabPosition(QTabWidget::East);
+    sidebar->addTab(users, "Users");
+    sidebar->addTab(variables, "Variables");
+    sidebar->addTab(functions,"Functions");
+    sidebar->setTabPosition(QTabWidget::East);
 
     QVBoxLayout* vbox = new QVBoxLayout;
     QHBoxLayout* hbox2 = new QHBoxLayout;
@@ -59,7 +60,7 @@ ServerObject::ServerObject(int height, int width) : serverLabel("Server: "), pwd
     hbox2->addWidget(processButton);
     hbox1 = new QHBoxLayout;
     hbox1->addWidget(output,3);
-    hbox1->addWidget(info,1);
+    hbox1->addWidget(sidebar,1);
     vbox->addLayout(hbox1);
     vbox->addLayout(hbox2);
     serverPage->setLayout(vbox);
@@ -187,7 +188,7 @@ void ServerObject::enteredRoom(QString name, Room info)
         this->roomContent[name].userWidget = this->users;
         this->roomContent[name].varWidget = this->variables;
         this->roomContent[name].funcWidget = this->functions;
-        this->roomContent[name].tab = this->info;
+        this->roomContent[name].tab = this->sidebar;
 
     }
     else
@@ -275,8 +276,6 @@ void ServerObject::definedVariable(QString rm, QString id, QString def)
         this->roomContent[rm].varWidget->findItems(id+"=", Qt::MatchContains).at(0)->setText(id+ "=" + def);
     else if(this->roomContent[rm].varWidget->findItems(id, Qt::MatchExactly).length() != 0)
         this->roomContent[rm].varWidget->findItems(id, Qt::MatchExactly).at(0)->setText(id+ "=" + def);
-    else
-        qDebug() << "shouldn happen ever";
 }
 
 
@@ -291,4 +290,20 @@ void ServerObject::clientLeft(QString rm, QString nk)
     QListWidgetItem* item = this->roomContent[rm].userWidget->findItems(nk,Qt::MatchExactly).at(0);
     delete item;
 
+}
+
+void ServerObject::setCurrentPage(pageType type)
+{
+    switch(type)
+    {
+        case INFO:
+            stackedWidget->setCurrentWidget(this->infoPage);
+            break;
+        case LOGIN:
+            stackedWidget->setCurrentWidget(this->loginPage);
+            break;
+        case SERVER:
+            stackedWidget->setCurrentWidget(this->serverPage);
+            break;
+    }
 }
