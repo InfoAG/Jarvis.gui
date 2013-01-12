@@ -263,9 +263,9 @@ void ServerObject::msgToRoom()
 
 void ServerObject::declaredVar(QString rm, QString id , QString tp)
 {
-    QListWidgetItem item(id);
-    item.setToolTip(tp);
-    this->roomContent[rm].varWidget->addItem(&item);
+    QListWidgetItem* item = new QListWidgetItem(id);
+    item->setToolTip(tp);
+    this->roomContent[rm].varWidget->addItem(item);
     this->roomContent[rm].varWidget->sortItems();
 }
 
