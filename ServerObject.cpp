@@ -1,6 +1,6 @@
 #include "ServerObject.h"
 
-ServerObject::ServerObject(int height, int width) : serverLabel("Server: "), nickLabel("Nick: "), pwdLabel("Password: "), portLabel("Port:")
+ServerObject::ServerObject(int height, int width)
 {
     roomCounter = 0;
     stackedWidget = new QStackedWidget;
@@ -13,19 +13,23 @@ ServerObject::ServerObject(int height, int width) : serverLabel("Server: "), nic
 
 
     //server = new QLineEdit("176.198.129.70");
+    serverLabel = new QLabel("Server: ");
+    nickLabel = new QLabel("Nick: ");
+    pwdLabel = new QLabel("Password: ");
+    portLabel = new QLabel("Port:");
     server = new QLineEdit("localhost");
     nick = new QLineEdit("Nick");
     pwd = new QLineEdit("pwd");
     port = new QLineEdit("4200");
     loginButton = new QPushButton("Login");
 
-    innerLayout->addWidget(&serverLabel,0,0);
+    innerLayout->addWidget(serverLabel,0,0);
     innerLayout->addWidget(server,0,1);
-    innerLayout->addWidget(&nickLabel,1,0);
+    innerLayout->addWidget(nickLabel,1,0);
     innerLayout->addWidget(nick,1,1);
-    innerLayout->addWidget(&pwdLabel,2,0);
+    innerLayout->addWidget(pwdLabel,2,0);
     innerLayout->addWidget(pwd,2,1);
-    innerLayout->addWidget(&portLabel,3,0);
+    innerLayout->addWidget(portLabel,3,0);
     innerLayout->addWidget(port,3,1);
     innerLayout->addWidget(loginButton,4,0);
 

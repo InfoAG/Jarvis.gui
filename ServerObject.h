@@ -34,13 +34,13 @@ private:
     QStackedWidget* stackedWidget;
     unsigned int roomCounter;
 
-    QLabel serverLabel; //loginPage stuff
+    QLabel* serverLabel; //loginPage stuff
     QLineEdit* server;
-    QLabel nickLabel;
+    QLabel* nickLabel;
     QLineEdit* nick;
-    QLabel pwdLabel;
+    QLabel* pwdLabel;
     QLineEdit* pwd;
-    QLabel portLabel;
+    QLabel* portLabel;
     QLineEdit* port;
     QPushButton* loginButton;
     QFrame* frame;
