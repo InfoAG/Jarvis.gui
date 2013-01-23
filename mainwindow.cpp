@@ -9,7 +9,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->treeView->header()->hide();
     ui->treeView->setModel(treeModel);
     ui->treeView->setSortingEnabled(true);
+
     root = treeModel->invisibleRootItem();
+    //ui->treeView->hide();
+    //ui->treeView->setMinimumWidth(70);
+    this->firstLogin = true;
 
 
     connect(ui->newServerConnectionAction,SIGNAL(triggered()),this,SLOT(newServerConnection()));
@@ -42,6 +46,11 @@ void MainWindow::newServerConnection()
 
 void MainWindow::receiveInitInfo(QString name)
 {
+    if(this->firstLogin)
+    {
+        ui->treeView->setVisible(true);
+        this->firstLogin = false;
+    }
     currentServer = name;
     this->serverObjects[name] = (ServerObject*)QObject::sender(); //associate ServerName with its ServerObject
     QStandardItem* serverItem = new QStandardItem(name);

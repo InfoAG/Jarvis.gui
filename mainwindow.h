@@ -29,6 +29,7 @@ private:
     QStandardItemModel* treeModel;
     QMap<QString,ServerObject*> serverObjects; //QMap out of serverID and ServerObject
     QString currentServer;
+    bool firstLogin;
 
 
 public slots:
