@@ -5,42 +5,12 @@ ServerObject::ServerObject(int height, int width)
     roomCounter = 0;
     stackedWidget = new QStackedWidget;
 
-    loginPage = new QWidget;
-    loginLayout = new QGridLayout;
-    frame = new QFrame;
     //frame->setStyleSheet(".QFrame {border-width: 7px; border-style: solid; border-top-color: QLinearGradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #101010, stop: 1 #33FFFF); border-right-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #33FFFF, stop: 1 #101010); border-left-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #101010, stop: 1 #33FFFF); border-bottom-color: QLinearGradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #33FFFF, stop: 1 #101010); background: qradialgradient(cx: 0.5, cy: -1.8,fx: 0.5, fy: 0,radius: 2,stop: 0 #a8a8a8,stop: 1 #1f1f1f);} QLabel {color: white; font-family: 'Lucida Console'} QLineEdit {border-width: 2px; border-style: solid; border-top-color: QLinearGradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #101010, stop: 1 #33FFFF); border-right-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #33FFFF, stop: 1 #101010); border-left-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #101010, stop: 1 #33FFFF); border-bottom-color: QLinearGradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #33FFFF, stop: 1 #101010); background: qlineargradient(x1:0, y1:0, x2:0, y2:1,stop:0 gray,stop: 0.2 white,stop:1 white);min-height: 24px;; color: black; font-family: 'Lucida Console'} QPushButton {font-family: 'Lucida Console';color: white; border: 1px solid black; border-radius: 3px; padding: 1px; background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #c4c4c4, stop: 0.5 #26272c); min-height: 20px} QPushButton:pressed {background: qlineargradient(x1:0, y1:0, x2:0, y2:1,stop:0 #7a7a7a,stop: 0.5 #101010);font-family: 'Lucida Console';color: white;} QPushButton:hover {color: #33FFFF;}");
     //frame->setStyleSheet(".QFrame {border-width: 7px; border-style: solid; border-top-color: QLinearGradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #101010, stop: 1 #33FFFF); border-right-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #33FFFF, stop: 1 #101010); border-left-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #101010, stop: 1 #33FFFF); border-bottom-color: QLinearGradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #33FFFF, stop: 1 #101010); background: qradialgradient(cx: 0.5, cy: -1.8,fx: 0.5, fy: 0,radius: 2,stop: 0 #a8a8a8,stop: 1 #1f1f1f);} QLabel {color: white; font-family: 'Lucida Console'} QLineEdit {border-image: url(:/images/lineedit.png); border-width:5px;} QPushButton {font-family: 'Lucida Console';color: white; border: 1px solid black; border-radius: 3px; padding: 1px; background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #c4c4c4, stop: 0.5 #26272c); min-height: 20px} QPushButton:pressed {background: qlineargradient(x1:0, y1:0, x2:0, y2:1,stop:0 #7a7a7a,stop: 0.5 #101010);font-family: 'Lucida Console';color: white;} QPushButton:hover {color: #33FFFF;}");
 
-    QGridLayout* innerLayout = new QGridLayout(frame);
-
-    //server = new QLineEdit("176.198.129.70");
-    serverLabel = new QLabel("Server: ");
-    nickLabel = new QLabel("Nick: ");
-    pwdLabel = new QLabel("Password: ");
-    portLabel = new QLabel("Port:");
-    server = new QLineEdit("localhost");
-    nick = new QLineEdit("Nick");
-    pwd = new QLineEdit("pwd");
-    port = new QLineEdit("4200");
-    loginButton = new QPushButton("Login");
-
-    innerLayout->addWidget(serverLabel,0,0);
-    innerLayout->addWidget(server,0,1);
-    innerLayout->addWidget(nickLabel,1,0);
-    innerLayout->addWidget(nick,1,1);
-    innerLayout->addWidget(pwdLabel,2,0);
-    innerLayout->addWidget(pwd,2,1);
-    innerLayout->addWidget(portLabel,3,0);
-    innerLayout->addWidget(port,3,1);
-    innerLayout->addWidget(loginButton,4,0);
 
 
-    loginLayout->addWidget(frame,1,1);
-    loginLayout->addItem(new QSpacerItem(width/6,1),1,2);
-    loginLayout->addItem(new QSpacerItem(width/6,1),2,0);
-    loginLayout->addItem(new QSpacerItem(1,height/6),0,1);
-    loginLayout->addItem(new QSpacerItem(1,height/6),2,1);
-    loginPage->setLayout(loginLayout);
+
 
     serverPage = new QWidget;
 
@@ -89,21 +59,17 @@ ServerObject::ServerObject(int height, int width)
     infoLayout->setMargin(0);
     infoPage->setLayout(infoLayout);
 
-    stackedWidget->addWidget(loginPage);
     stackedWidget->addWidget(serverPage);
     stackedWidget->addWidget(infoPage);
 
-
-    connect(loginButton,SIGNAL(clicked()),this,SLOT(performLogin()));
     connect(input,SIGNAL(returnPressed()),this,SLOT(msgToRoom()));
     connect(processButton,SIGNAL(clicked()),this,SLOT(msgToRoom()));
 }
 
-void ServerObject::performLogin()
+void ServerObject::performLogin(QString s, int p, QString n, QString pwd)
 {
-    this->loginButton->setEnabled(false);
-    this->loginButton->setText("Connecting...");
-    client = new JarvisClient(this->server->text(),this->port->text().toInt(),this->nick->text(),this->pwd->text());
+    client = new JarvisClient(s,p,n,pwd);
+    this->server = s;
 
 
     connect(client,SIGNAL(receivedInitInfo(QStringList,QList<ModulePackage>)),this,SLOT(receiveInitInfo(QStringList,QList<ModulePackage>)));
@@ -176,7 +142,7 @@ void ServerObject::receiveInitInfo(QStringList globalRooms,QList<ModulePackage> 
 
     }
 
-    emit receivedInitInfo(this->server->text());
+    emit receivedInitInfo(this->server);
 }
 
 void ServerObject::enterRoom(QString room)
@@ -212,7 +178,7 @@ void ServerObject::enteredRoom(QString name, Room info)
 
     this->roomCounter++;
     currentRoom = name;
-    emit roomOK(name,this->server->text());
+    emit roomOK(name,this->server);
 
     //add userlist to userWidget and sort them
     this->roomContent[currentRoom].userWidget->addItems(info.clients);
@@ -308,9 +274,6 @@ void ServerObject::setCurrentPage(pageType type)
     {
         case INFO:
             stackedWidget->setCurrentWidget(this->infoPage);
-            break;
-        case LOGIN:
-            stackedWidget->setCurrentWidget(this->loginPage);
             break;
         case SERVER:
             stackedWidget->setCurrentWidget(this->serverPage);

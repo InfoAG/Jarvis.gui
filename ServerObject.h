@@ -34,16 +34,7 @@ private:
     QStackedWidget* stackedWidget;
     unsigned int roomCounter;
 
-    QLabel* serverLabel; //loginPage stuff
-    QLineEdit* server;
-    QLabel* nickLabel;
-    QLineEdit* nick;
-    QLabel* pwdLabel;
-    QLineEdit* pwd;
-    QLabel* portLabel;
-    QLineEdit* port;
-    QPushButton* loginButton;
-    QFrame* frame;
+    QString server;
 
 
     QLineEdit* input; //serverPage stuff
@@ -61,8 +52,6 @@ private:
     QStandardItemModel* roomModel;
 
 
-
-    QWidget* loginPage;
     QWidget* serverPage;
     QWidget* infoPage;
     QGridLayout* loginLayout;
@@ -85,7 +74,6 @@ private:
 public:
     enum pageType
     {
-        LOGIN,
         SERVER,
         INFO
     };
@@ -100,7 +88,6 @@ signals:
     void receivedInitInfo(QString name);
     void roomOK(QString name, QString server);
 private slots:
-    void performLogin();
     void receiveInitInfo(QStringList,QList<ModulePackage>);
     void enteredRoom(QString name, Room sidebar);
     void msgInRoom(QString room, QString sender ,QString msg);
@@ -109,6 +96,8 @@ private slots:
     void definedVariable(QString rm, QString id, QString def);
     void newClient(QString rm, QString nk);
     void clientLeft(QString rm, QString nk);
+public slots:
+    void performLogin(QString s, int p, QString n, QString pwd);
 
 };
 
