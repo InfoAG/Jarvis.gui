@@ -11,7 +11,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QPropertyAnimation>
-#include <QParallelAnimationGroup>
+#include <QSpacerItem>
 
 
 
@@ -41,7 +41,9 @@ private:
     QLineEdit* pwd;
     QLineEdit* port;
     QPushButton* loginButton;
+    QPushButton* cancelButton;
     QWidget* loginWidget;
+    QSpacerItem* widgetSurrogate;
 
 
 
@@ -53,6 +55,7 @@ public slots:
     void roomOK(QString name, QString server);
     void showLogin();
     void hideLogin();
+    void removeSpacer();
 
 
 };

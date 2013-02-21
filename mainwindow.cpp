@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "QGraphicsOpacityEffect"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWindow)
 {
@@ -11,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     ui->treeView->setSortingEnabled(true);
 
     root = treeModel->invisibleRootItem();
-    ui->treeView->hide();
     ui->treeView->setMinimumWidth(70);
     this->firstLogin = true;
 
@@ -23,17 +21,24 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     pwd->setEchoMode( QLineEdit::Password );
     port = new QLineEdit("4200");
     loginButton = new QPushButton("Login");
+    cancelButton = new QPushButton("Cancel");
     loginLayout->addRow(tr("&Server:"), server);
     loginLayout->addRow(tr("&Nick:"), nick);
     loginLayout->addRow(tr("&Password:"), pwd);
     loginLayout->addRow(tr("&Port:"), port);
-    loginLayout->addRow(loginButton);
+    QHBoxLayout* buttonsLayout = new QHBoxLayout;
+    buttonsLayout->addWidget(loginButton);
+    buttonsLayout->addWidget(cancelButton);
+    loginLayout->addRow(buttonsLayout);
     loginWidget = new QWidget;
     loginWidget->setLayout(loginLayout);
+    loginWidget->setMaximumHeight(0);
+    widgetSurrogate = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding);
+    ui->verticalLayout->addSpacerItem(widgetSurrogate);
     ui->verticalLayout->insertWidget(0,loginWidget);
-    loginWidget->hide();
-
     this->currentServer = "";
+
+    ui->treeView->hide();
 
 
 
@@ -43,6 +48,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),ui(new Ui::MainWin
     connect(this->loginButton,SIGNAL(clicked()),this,SLOT(newServerConnection()));
     connect(ui->treeView,SIGNAL(clicked(QModelIndex)),this,SLOT(activate(QModelIndex)));
     connect(this->treeModel,SIGNAL(itemChanged(QStandardItem*)),this,SLOT(modelDataChanged(QStandardItem*)));
+    connect(this->cancelButton, SIGNAL(clicked()),this,SLOT(hideLogin()));
 }
 
 
@@ -54,74 +60,28 @@ MainWindow::~MainWindow()
 void MainWindow::showLogin()
 {
 
-    int oldHeight = ui->treeView->height();
+    QPropertyAnimation *sizeAnim = new QPropertyAnimation(this->loginWidget, "maximumHeight", this);
+    sizeAnim->setDuration(500);
+    sizeAnim->setStartValue(0);
+    sizeAnim->setEndValue(150);
+    sizeAnim->start();
 
-    this->loginWidget->show();
-
-    QParallelAnimationGroup* animGroup = new QParallelAnimationGroup(this);
-
-    QPropertyAnimation *posAnimation = new QPropertyAnimation(this->loginWidget, "pos", this);
-    posAnimation->setDuration(500);
-    posAnimation->setStartValue(QPoint(this->loginWidget->x(),this->loginWidget->y()-this->loginWidget->height()));
-    posAnimation->setEndValue(QPoint(this->loginWidget->x(),this->loginWidget->y()));
-    animGroup->addAnimation(posAnimation);
-
-
-    QPropertyAnimation* resizeAnimation1 = new QPropertyAnimation(ui->treeView, "geometry", this);
-    resizeAnimation1->setDuration(500);
-    resizeAnimation1->setStartValue(QRect(ui->treeView->x(),ui->treeView->y()-this->loginWidget->height(),ui->treeView->width(),oldHeight-7));
-    resizeAnimation1->setEndValue(QRect(ui->treeView->x(),ui->treeView->y(),ui->treeView->width(),ui->treeView->height()));
-    animGroup->addAnimation(resizeAnimation1);
-
-
-    QPropertyAnimation* resizeAnimation2;
-    if(this->serverObjects[currentServer])
-    {
-        QWidget* wid = this->serverObjects[currentServer]->getWidget();
-        resizeAnimation2 = new QPropertyAnimation(wid, "geometry", this);
-        resizeAnimation2->setDuration(500);
-        resizeAnimation2->setStartValue(QRect(wid->x(),wid->y()-this->loginWidget->height(),wid->width(),oldHeight-7));
-        resizeAnimation2->setEndValue(QRect(wid->x(),wid->y(),wid->width(),wid->height()));
-        animGroup->addAnimation(resizeAnimation2);
-    }
-
-    animGroup->start();
 
 }
 
 void MainWindow::hideLogin()
 {
 
-    QParallelAnimationGroup* animGroup = new QParallelAnimationGroup(this);
+    QPropertyAnimation *sizeAnim = new QPropertyAnimation(this->loginWidget, "maximumHeight", this);
+    sizeAnim->setDuration(500);
+    sizeAnim->setStartValue(150);
+    sizeAnim->setEndValue(0);
+    sizeAnim->start();
 
-    QPropertyAnimation *posAnimation = new QPropertyAnimation(this->loginWidget, "pos", this);
-    posAnimation->setDuration(500);
-    posAnimation->setStartValue(QPoint(this->loginWidget->x(),this->loginWidget->y()));
-    posAnimation->setEndValue(QPoint(this->loginWidget->x(),this->loginWidget->y()-this->loginWidget->height()));
-    animGroup->addAnimation(posAnimation);
-
-
-    QPropertyAnimation* resizeAnimation1 = new QPropertyAnimation(ui->treeView, "geometry", this);
-    resizeAnimation1->setDuration(500);
-    resizeAnimation1->setStartValue(QRect(ui->treeView->x(),ui->treeView->y(),ui->treeView->width(),ui->treeView->height()));
-    resizeAnimation1->setEndValue(QRect(ui->treeView->x(),ui->treeView->y()-this->loginWidget->height(),ui->treeView->width(),ui->treeView->maximumHeight()));
-    animGroup->addAnimation(resizeAnimation1);
-
-
-    QPropertyAnimation* resizeAnimation2;
-    if(this->serverObjects[currentServer])
+    if(firstLogin)
     {
-        QWidget* wid = this->serverObjects[currentServer]->getWidget();
-        resizeAnimation2 = new QPropertyAnimation(wid, "geometry", this);
-        resizeAnimation2->setDuration(500);
-        resizeAnimation2->setStartValue(QRect(wid->x(),wid->y(),wid->width(),wid->height()));
-        resizeAnimation2->setEndValue(QRect(wid->x(),wid->y()-this->loginWidget->height(),wid->width(),wid->maximumHeight()));
-        animGroup->addAnimation(resizeAnimation2);
+        connect(sizeAnim, SIGNAL(finished()), this, SLOT(removeSpacer()));
     }
-
-    animGroup->start();
-
-    connect(animGroup, SIGNAL(finished()), this->loginWidget, SLOT(hide()));
 
 }
 
@@ -129,16 +89,9 @@ void MainWindow::hideLogin()
 
 void MainWindow::newServerConnection()
 {
-    QLayoutItem* item = ui->horizontalLayout->itemAt(1);
-    if(item)
-    {
-        ui->horizontalLayout->removeItem(item);
-    }
-
     ServerObject* newServer = new ServerObject(this->height(),this->width());
     newServer->performLogin(this->server->text(),this->port->text().toInt(), this->nick->text(), this->pwd->text());
 
-    //this->loginWidget->hide();
     hideLogin();
 
     connect(newServer,SIGNAL(receivedInitInfo(QString)),this,SLOT(receiveInitInfo(QString)));
@@ -151,6 +104,10 @@ void MainWindow::receiveInitInfo(QString name)
     {
         ui->treeView->setVisible(true);
         this->firstLogin = false;
+    }
+    else
+    {
+        serverObjects[currentServer]->getWidget()->setParent(NULL);
     }
     currentServer = name;
     this->serverObjects[name] = (ServerObject*)QObject::sender(); //associate ServerName with its ServerObject
@@ -225,6 +182,11 @@ void MainWindow::roomOK(QString name, QString server)
 {
     this->treeModel->findItems(server).at(0)->appendRow(new QStandardItem("new Room"));
 
+}
+
+void MainWindow::removeSpacer()
+{
+    ui->verticalLayout->removeItem(this->widgetSurrogate); delete this->widgetSurrogate;
 }
 
 
